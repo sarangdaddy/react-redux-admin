@@ -46,3 +46,4 @@ npm start
 - DOCS : 문서 관련
 - MOVE : 파일 이동
 - MERGE : 머지 커밋
+- TEST : 태스트 코드 작성
