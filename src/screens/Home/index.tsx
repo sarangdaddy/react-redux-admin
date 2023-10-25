@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { IRootState } from '@/modules/types';
 import axios from 'axios';
+import { IRootState } from '@/modules/types';
 import * as S from './styles';
 
 const Home = () => {
