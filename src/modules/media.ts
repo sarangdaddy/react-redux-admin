@@ -3,11 +3,10 @@ import {
   IMobileAction,
   ITabletAction,
   IMediaActions,
+  SET_IS_MOBILE,
+  SET_IS_TABLET,
+  SET_IS_DESKTOP,
 } from './types';
-
-const SET_IS_MOBILE = 'media/SET_IS_MOBILE';
-const SET_IS_TABLET = 'media/SET_IS_TABLET';
-const SET_IS_DESKTOP = 'media/SET_IS_DESKTOP';
 
 export const setIsMobile = (value: boolean): IMobileAction => ({
   type: SET_IS_MOBILE,
