@@ -17,7 +17,7 @@ export interface IDesktopAction {
   payload: boolean;
 }
 
-export type IResponsiveActions = IMobileAction | ITabletAction | IDesktopAction;
+export type IMediaActions = IMobileAction | ITabletAction | IDesktopAction;
 
 export interface IMediaState {
   isMobile: boolean;

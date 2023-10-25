@@ -2,7 +2,7 @@ import {
   IDesktopAction,
   IMobileAction,
   ITabletAction,
-  IResponsiveActions,
+  IMediaActions,
 } from './types';
 
 const SET_IS_MOBILE = 'media/SET_IS_MOBILE';
@@ -30,10 +30,7 @@ const initialState = {
   isDesktop: false,
 };
 
-const responsiveReducer = (
-  state = initialState,
-  action: IResponsiveActions,
-) => {
+const mediaReducer = (state = initialState, action: IMediaActions) => {
   switch (action.type) {
     case SET_IS_MOBILE:
       return { ...state, isMobile: action.payload };
@@ -46,4 +43,4 @@ const responsiveReducer = (
   }
 };
 
-export default responsiveReducer;
+export default mediaReducer;
