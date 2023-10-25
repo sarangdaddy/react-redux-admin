@@ -10,6 +10,5 @@
     ],
     ["@babel/preset-react", { "runtime": "automatic" }],
     "@babel/preset-typescript"
-  ],
-  "plugins": ["transform-es2015-modules-commonjs"]
+  ]
 }
