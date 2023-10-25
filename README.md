@@ -31,6 +31,14 @@ npm start
 
 - http://localhost:3010 에서 애플리케이션을 확인할 수 있습니다.
 
+### 5. TEST
+
+```bash
+npm test
+```
+
+- test code를 진행합니다.
+
 </br>
 
 ## Commit Prefix
