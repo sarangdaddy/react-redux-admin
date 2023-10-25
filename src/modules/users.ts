@@ -7,7 +7,7 @@ import {
   IUserDataActions,
 } from './types';
 
-export const setUsers = (users: IUser) => ({
+export const setUsers = (users: IUser[]) => ({
   type: SET_USERS,
   payload: users,
 });
