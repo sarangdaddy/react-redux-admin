@@ -160,6 +160,13 @@
       "birthday": "1979-07-21",
       "sex": "m",
       "isDeleted": false
+    },
+    {
+      "id": 24,
+      "nickname": "SungUn",
+      "birthday": "1989-04-28",
+      "sex": "m",
+      "isDeleted": false
     }
   ]
 }
