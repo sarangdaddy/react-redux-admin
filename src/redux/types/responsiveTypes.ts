@@ -1,5 +1,0 @@
-export const REDUX_TYPES = {
-  SET_IS_MOBILE: 'SET_IS_MOBILE',
-  SET_IS_TABLET: 'SET_IS_TABLET',
-  SET_IS_DESKTOP: 'SET_IS_DESKTOP',
-} as const;

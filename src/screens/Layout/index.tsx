@@ -2,11 +2,7 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useMediaQuery from 'beautiful-react-hooks/useMediaQuery';
-import {
-  setIsMobile,
-  setIsTablet,
-  setIsDesktop,
-} from '@/redux/actions/responsiveActions';
+import { setIsMobile, setIsTablet, setIsDesktop } from '@/modules/media';
 
 const Layout = () => {
   const dispatch = useDispatch();
