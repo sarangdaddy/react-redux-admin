@@ -11,9 +11,9 @@ import * as S from './styles';
 interface ThumbnailProps {
   isAdd?: () => void;
   isDeleted?: () => void;
-  user: IUser;
-  isChecked: boolean;
-  onCheckboxChange: (userId: number, checked: boolean) => void;
+  user?: IUser;
+  isChecked?: boolean;
+  onCheckboxChange?: (userId: number, checked: boolean) => void;
 }
 
 const Thumbnail = ({
@@ -23,13 +23,15 @@ const Thumbnail = ({
   isAdd,
   isDeleted,
 }: ThumbnailProps) => {
-  const firstLetterOfNickname = user.nickname[0];
-  const sexInKorean = user.sex === 'm' ? '남자' : '여자';
+  const firstLetterOfNickname = user?.nickname[0];
+  const sexInKorean = user?.sex === 'm' ? '남자' : '여자';
   const isMobile = useSelector((state: IRootState) => state.media.isMobile);
   const isTablet = useSelector((state: IRootState) => state.media.isTablet);
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onCheckboxChange(user.id, e.target.checked);
+    if (user && onCheckboxChange) {
+      onCheckboxChange(user.id, e.target.checked);
+    }
   };
 
   if (isAdd) {
@@ -58,11 +60,11 @@ const Thumbnail = ({
         <div className="profile">
           <div className="profile-content">
             <span>{PROFILE_LIST.name}</span>
-            <span>{user.nickname}</span>
+            <span>{user?.nickname}</span>
           </div>
           <div className="profile-content">
             <span>{PROFILE_LIST.birthday}</span>
-            <span>{user.birthday}</span>
+            <span>{user?.birthday}</span>
           </div>
           <div className="profile-content">
             <span>{PROFILE_LIST.sex}</span>
