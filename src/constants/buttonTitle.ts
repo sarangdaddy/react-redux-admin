@@ -18,10 +18,12 @@ export const PAGE_LIST = [
   {
     id: 1,
     name: '전체 회원',
+    path: '/',
   },
   {
     id: 2,
     name: '삭제 회원',
+    path: '/delete',
   },
 ];
 
