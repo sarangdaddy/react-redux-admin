@@ -1,6 +1,11 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQueryClient } from '@tanstack/react-query';
 import { updateUserData, addUserData } from '@/apis';
+import FilterButton from '@/components/FilterButton';
+import Thumbnail from '@/components/Thumbnail';
+import sortUsers from '@/utils/sortUsers';
+import { FILTER_LIST } from '@/constants/buttonTitle';
 import { IRootState, IUser } from '@/modules/types';
 import * as S from './styles';
 
@@ -10,8 +15,19 @@ const Home = () => {
   const activeUsers = users.filter((user) => !user.isDeleted);
   const isMobile = useSelector((state: IRootState) => state.media.isMobile);
   const isTablet = useSelector((state: IRootState) => state.media.isTablet);
-
   const queryClient = useQueryClient();
+  const [currentFilter, setCurrentFilter] = useState(FILTER_LIST[0]);
+  const [checkedUserIds, setCheckedUserIds] = useState<number[]>([]);
+
+  const onCheckboxChange = (userId: number, checked: boolean) => {
+    if (checked) {
+      setCheckedUserIds((prev) => [...prev, userId]);
+    } else {
+      setCheckedUserIds((prev) => prev.filter((id) => id !== userId));
+    }
+  };
+
+  const sortedUsers = sortUsers(activeUsers, currentFilter);
 
   const handleUpdate = (id: number) => {
     updateUserData(id, dispatch);
@@ -31,18 +47,28 @@ const Home = () => {
   };
 
   return (
-    <>
-      <S.Container $isMobile={isMobile} $isTablet={isTablet}>
-        {activeUsers.map((user) => (
-          <li key={user.id}>
-            <span onClick={() => handleUpdate(user.id)}>
-              {user.nickname} / {user.isDeleted?.toString()}
-            </span>
-          </li>
-        ))}
-        <button onClick={handleAdd}>add</button>
+    <S.Wrapper>
+      <S.Container>
+        <S.Header>
+          <FilterButton
+            currentFilter={currentFilter}
+            setCurrentFilter={setCurrentFilter}
+          />
+          <S.Switch>선택</S.Switch>
+        </S.Header>
+        <S.Body $isMobile={isMobile} $isTablet={isTablet}>
+          <Thumbnail isAdd={handleAdd} />
+          {sortedUsers.map((user) => (
+            <Thumbnail
+              key={user.id}
+              user={user}
+              isChecked={checkedUserIds.includes(user.id)}
+              onCheckboxChange={onCheckboxChange}
+            />
+          ))}
+        </S.Body>
       </S.Container>
-    </>
+    </S.Wrapper>
   );
 };
 
