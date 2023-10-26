@@ -1,4 +1,4 @@
-import usersReducer, { setUsers, addUser, updateUser } from './users';
+import usersReducer, { setUsers, addUser, updateUsers } from './users';
 import { IUser, IUserDataState, IUserDataActions } from './types';
 
 describe('usersReducer', () => {
@@ -43,7 +43,7 @@ describe('usersReducer', () => {
     expect(state.users).toContainEqual(user);
   });
 
-  it('Test UPDATE_USER action in usersReducer', () => {
+  it('Test UPDATE_USERS action in usersReducer', () => {
     initialState.users.push({
       id: 1,
       nickname: 'SungUn',
@@ -52,7 +52,10 @@ describe('usersReducer', () => {
       isDeleted: false,
     });
 
-    const state = usersReducer(initialState, updateUser(1) as IUserDataActions);
+    const state = usersReducer(
+      initialState,
+      updateUsers([1]) as IUserDataActions,
+    );
 
     expect(state.users[0].isDeleted).toBe(true);
   });
