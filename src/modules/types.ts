@@ -29,7 +29,7 @@ export interface IMediaState {
 // user_data
 export const SET_USERS = 'users/SET_USERS';
 export const ADD_USER = 'users/ADD_USER';
-export const UPDATE_USER = 'users/UPDATE_USER';
+export const UPDATE_USERS = 'users/UPDATE_USERS';
 
 export interface IFetchUsersAction {
   type: typeof SET_USERS;
@@ -42,8 +42,8 @@ export interface IAddUserAction {
 }
 
 export interface IToggleUserDeletedAction {
-  type: typeof UPDATE_USER;
-  payload: number;
+  type: typeof UPDATE_USERS;
+  payload: number[];
 }
 
 export type IUserDataActions =

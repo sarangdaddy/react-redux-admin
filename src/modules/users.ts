@@ -1,7 +1,7 @@
 import {
   SET_USERS,
   ADD_USER,
-  UPDATE_USER,
+  UPDATE_USERS,
   IUser,
   IUserDataState,
   IUserDataActions,
@@ -17,9 +17,9 @@ export const addUser = (user: IUser) => ({
   payload: user,
 });
 
-export const updateUser = (userId: number) => ({
-  type: UPDATE_USER,
-  payload: userId,
+export const updateUsers = (userIds: number[]) => ({
+  type: UPDATE_USERS,
+  payload: userIds,
 });
 
 const initialState: IUserDataState = {
@@ -41,11 +41,11 @@ const usersReducer = (
         ...state,
         users: [...state.users, action.payload],
       };
-    case UPDATE_USER:
+    case UPDATE_USERS:
       return {
         ...state,
         users: state.users.map((user) =>
-          user.id === action.payload
+          action.payload.includes(user.id)
             ? { ...user, isDeleted: !user.isDeleted }
             : user,
         ),

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { IUser } from '@/modules/types';
-import { addUser, updateUser } from '@/modules/users';
+import { addUser, updateUsers } from '@/modules/users';
 import { AppDispatch } from '../index';
 
 const BASE_API_URL = 'http://localhost:9000';
@@ -33,13 +33,17 @@ export const addUserData = async (data: IUser, dispatch: AppDispatch) => {
   }
 };
 
-export const updateUserData = async (id: number, dispatch: AppDispatch) => {
+export const updateUserData = async (ids: number[], dispatch: AppDispatch) => {
   try {
     const userToUpdate = { isDeleted: true };
-    const res = await axiosInstance.patch(`/user_data/${id}`, userToUpdate);
+    const queryString = ids.join(',');
+    const res = await axiosInstance.patch(
+      `/user_data?ids=${queryString}`,
+      userToUpdate,
+    );
 
     if (res.status === 200) {
-      dispatch(updateUser(id));
+      dispatch(updateUsers(ids));
     }
   } catch (err) {
     return err;
