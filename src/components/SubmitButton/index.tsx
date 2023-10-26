@@ -1,10 +1,11 @@
+import { MouseEventHandler } from 'react';
 import * as S from './styles';
 
 interface SubmitButtonProps {
   label: string;
   large?: boolean;
   isActive?: boolean;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const SubmitButton = ({

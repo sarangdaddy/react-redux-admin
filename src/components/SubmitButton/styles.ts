@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Button = styled.button<{ $isActive: boolean; $large: boolean }>`
   width: ${(props) => (props.$large ? '70%' : '330px')};
-  height: 50px;
+  height: 40px;
   padding: 15px, 10px, 15px, 10px;
   border-radius: 5px;
   border: none;

@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { updateUserData, addUserData } from '@/apis';
 import FilterButton from '@/components/FilterButton';
 import Thumbnail from '@/components/Thumbnail';
+import Footer from '@/components/Footer';
 import sortUsers from '@/utils/sortUsers';
 import { FILTER_LIST } from '@/constants/buttonTitle';
 import { IRootState, IUser } from '@/modules/types';
@@ -30,7 +31,7 @@ const Home = () => {
     }
   };
 
-  const handleUpdate = (id: number) => {
+  const handleUserUpdate = (id: number) => {
     updateUserData(id, dispatch);
   };
 
@@ -49,6 +50,7 @@ const Home = () => {
 
   const toggleActive = () => {
     setIsActive((prev) => !prev);
+    setCheckedUserIds([]);
   };
 
   return (
@@ -77,6 +79,11 @@ const Home = () => {
           ))}
         </S.Body>
       </S.Container>
+      <Footer
+        isActive={isActive}
+        checkedUserIds={checkedUserIds}
+        handleDelete={handleUserUpdate}
+      />
     </S.Wrapper>
   );
 };
