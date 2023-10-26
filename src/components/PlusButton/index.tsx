@@ -1,8 +1,12 @@
 import * as S from './styles';
 
-const PlusButton = () => {
+interface PlusButtonProps {
+  onAddUserPop: () => void;
+}
+
+const PlusButton = ({ onAddUserPop }: PlusButtonProps) => {
   return (
-    <S.Container>
+    <S.Container onClick={onAddUserPop}>
       <svg
         width={30}
         height={30}
