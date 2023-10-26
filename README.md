@@ -18,7 +18,7 @@ npm install
 ### 3. JSON 서버 시작
 
 ```bash
-npm run serve
+npm run server
 ```
 
 - http://localhost:9000 에서 JSON 서버의 데이터를 확인할 수 있습니다.
