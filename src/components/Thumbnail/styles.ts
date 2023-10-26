@@ -10,6 +10,20 @@ export const Container = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   box-shadow: 0px 5px 15px 0px #091f5b33;
 `;
 
+export const AddContainer = styled.div<{
+  $isMobile: boolean;
+  $isTablet: boolean;
+}>`
+  width: ${(props) =>
+    props.$isMobile ? '327px' : props.$isTablet ? '350px' : '450px'};
+  height: 430px;
+  background-color: white;
+  box-shadow: 0px 5px 15px 0px #091f5b33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Header = styled.div`
   width: 100%;
   height: 145px;
