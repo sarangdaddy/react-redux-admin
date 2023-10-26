@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const Container = styled.div<{ $isMobile: boolean }>`
   width: 100%;
   display: flex;
+  background-color: ${(props) => props.theme.colors.white};
   justify-content: space-between;
   align-items: ${(props) => (props.$isMobile ? 'flex-start' : 'center')};
   flex-direction: ${(props) => (props.$isMobile ? 'column' : 'row')};
