@@ -33,6 +33,7 @@ export interface IPage {
 }
 
 export const SUBMIT_BUTTON = {
+  delete: '회원 삭제하기',
   save: '저장하기',
   recovery: '복구하기',
 };
