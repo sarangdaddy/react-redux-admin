@@ -5,11 +5,13 @@ import * as S from './styles';
 interface FilterButtonProps {
   currentFilter: IFilter;
   setCurrentFilter: (filter: IFilter) => void;
+  isActive?: boolean;
 }
 
 const FilterButton = ({
   currentFilter,
   setCurrentFilter,
+  isActive = true,
 }: FilterButtonProps) => {
   const [isOpened, setIsOpened] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,7 +44,7 @@ const FilterButton = ({
 
   return (
     <S.Container onClick={handleToggle} ref={containerRef}>
-      <S.Main $isOpened={isOpened}>
+      <S.Main $isOpened={isOpened} disabled={!isActive}>
         <S.Title>{currentFilter.name}</S.Title>
         <svg
           width={13}

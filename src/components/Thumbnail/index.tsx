@@ -14,6 +14,7 @@ interface ThumbnailProps {
   user?: IUser;
   isChecked?: boolean;
   onCheckboxChange?: (userId: number, checked: boolean) => void;
+  isActive?: boolean;
 }
 
 const Thumbnail = ({
@@ -22,6 +23,7 @@ const Thumbnail = ({
   onCheckboxChange,
   isAdd,
   isDeleted,
+  isActive = true,
 }: ThumbnailProps) => {
   const firstLetterOfNickname = user?.nickname[0];
   const sexInKorean = user?.sex === 'm' ? '남자' : '여자';
@@ -37,7 +39,7 @@ const Thumbnail = ({
   if (isAdd) {
     return (
       <S.AddContainer $isMobile={isMobile} $isTablet={isTablet}>
-        <PlusButton onAddUserPop={isAdd} />
+        <PlusButton onAddUserPop={isAdd} isActive={isActive} />
       </S.AddContainer>
     );
   }
@@ -45,13 +47,15 @@ const Thumbnail = ({
   return (
     <S.Container $isMobile={isMobile} $isTablet={isTablet}>
       <S.Header>
-        <S.Checkbox>
-          <input
-            type="checkbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-          />
-        </S.Checkbox>
+        {!isActive && (
+          <S.Checkbox>
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
+            />
+          </S.Checkbox>
+        )}
       </S.Header>
       <S.Content>
         <div className="profile-info">

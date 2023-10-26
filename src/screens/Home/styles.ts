@@ -24,7 +24,7 @@ export const Header = styled.div`
   z-index: 1;
 `;
 
-export const Switch = styled.div`
+export const Switch = styled.div<{ $isActive: boolean }>`
   width: 58px;
   height: 40px;
   display: flex;
@@ -32,7 +32,10 @@ export const Switch = styled.div`
   align-items: center;
   border-radius: 5px;
   cursor: pointer;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) =>
+    props.$isActive ? props.theme.colors.white : props.theme.colors.lightBlue};
+  color: ${(props) =>
+    props.$isActive ? props.theme.colors.darkBlue : props.theme.colors.white};
 `;
 
 export const Body = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`

@@ -9,13 +9,15 @@ export const Container = styled.button`
   border: none;
   transition: background-color 0.1s ease-in-out;
   box-shadow: 0px 4px 10px 0px #091f5b26;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 
-  &:hover {
+  background-color: ${(props) => props.disabled && props.theme.colors.darkGray};
+
+  &:not([disabled]):hover {
     background-color: ${(props) => props.theme.colors.lightBlue};
   }
 
-  &:active {
+  &:not([disabled]):active {
     background-color: ${(props) => props.theme.colors.darkBlue};
   }
 `;

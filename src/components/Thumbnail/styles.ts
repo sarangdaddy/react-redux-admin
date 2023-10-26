@@ -31,10 +31,13 @@ export const Header = styled.div`
   position: relative;
 `;
 
-export const Checkbox = styled.div`
+export const Checkbox = styled.button`
   position: absolute;
   right: 0px;
   padding: 10px;
+  border: none;
+  background: none;
+  outline: none;
 
   input {
     width: 25px;

@@ -2,11 +2,12 @@ import * as S from './styles';
 
 interface PlusButtonProps {
   onAddUserPop: () => void;
+  isActive?: boolean;
 }
 
-const PlusButton = ({ onAddUserPop }: PlusButtonProps) => {
+const PlusButton = ({ onAddUserPop, isActive = true }: PlusButtonProps) => {
   return (
-    <S.Container onClick={onAddUserPop}>
+    <S.Container onClick={onAddUserPop} disabled={!isActive}>
       <svg
         width={30}
         height={30}

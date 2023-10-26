@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  position: relative;
+`;
 
-export const Main = styled.div<{ $isOpened: boolean }>`
+export const Main = styled.button<{ $isOpened: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +14,7 @@ export const Main = styled.div<{ $isOpened: boolean }>`
   padding: 10px, 15px, 10px, 15px;
   border-radius: 5px;
   border: none;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   transition:
     background-color 0.2s ease-in-out,
     color 0.2s ease-in-out;
@@ -20,11 +22,11 @@ export const Main = styled.div<{ $isOpened: boolean }>`
     props.$isOpened ? props.theme.colors.white : props.theme.colors.darkBlue};
 
   background-color: ${(props) =>
-    props.$isOpened
-      ? props.theme.colors.lightBlue
-      : props.theme.colors.darkGray};
+    props.$isOpened ? props.theme.colors.lightBlue : props.theme.colors.white};
 
-  &:hover {
+  background-color: ${(props) => props.disabled && props.theme.colors.darkGray};
+
+  &:not([disabled]):hover {
     background-color: ${(props) => props.theme.colors.lightBlue};
     color: ${(props) => props.theme.colors.white};
   }
@@ -36,6 +38,7 @@ export const Title = styled.div`
 `;
 
 export const Modal = styled.ul<{ $isOpened: boolean }>`
+  position: absolute;
   margin-top: 5px;
   width: 123px;
   border-radius: 14px;
