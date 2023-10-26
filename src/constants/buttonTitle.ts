@@ -37,3 +37,8 @@ export const SUBMIT_BUTTON = {
   save: '저장하기',
   recovery: '복구하기',
 };
+
+export const TOGGLE_ACTIVE = {
+  on: '선택',
+  off: '취소',
+};

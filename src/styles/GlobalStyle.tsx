@@ -65,6 +65,10 @@ a {
     color:inherit;
 }
 
+body {
+  background-color: ${(props) => props.theme.colors.lightGray};
+}
+
 `;
 
 export default GlobalStyle;

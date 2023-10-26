@@ -6,7 +6,7 @@ import FilterButton from '@/components/FilterButton';
 import Thumbnail from '@/components/Thumbnail';
 import Footer from '@/components/Footer';
 import sortUsers from '@/utils/sortUsers';
-import { FILTER_LIST } from '@/constants/buttonTitle';
+import { FILTER_LIST, TOGGLE_ACTIVE } from '@/constants/buttonTitle';
 import { IRootState, IUser } from '@/modules/types';
 import * as S from './styles';
 
@@ -31,8 +31,10 @@ const Home = () => {
     }
   };
 
-  const handleUserUpdate = (id: number) => {
-    updateUserData(id, dispatch);
+  const handleDeleteUsers = (ids: number[]) => {
+    updateUserData(ids, dispatch);
+    setIsActive((prev) => !prev);
+    setCheckedUserIds([]);
   };
 
   const handleAdd = () => {
@@ -63,7 +65,7 @@ const Home = () => {
             isActive={isActive}
           />
           <S.Switch onClick={toggleActive} $isActive={isActive}>
-            {isActive ? '선택' : '취소'}
+            {isActive ? TOGGLE_ACTIVE.on : TOGGLE_ACTIVE.off}
           </S.Switch>
         </S.Header>
         <S.Body $isMobile={isMobile} $isTablet={isTablet}>
@@ -82,7 +84,7 @@ const Home = () => {
       <Footer
         isActive={isActive}
         checkedUserIds={checkedUserIds}
-        handleDelete={handleUserUpdate}
+        onUsersDelete={handleDeleteUsers}
       />
     </S.Wrapper>
   );
