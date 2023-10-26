@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   width: ${(props) =>
     props.$isMobile ? '327px' : props.$isTablet ? '350px' : '450px'};
-  height: 430px;
   background-color: white;
+  height: 100%;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0px 5px 15px 0px #091f5b33;
@@ -105,4 +105,11 @@ export const Content = styled.div`
       }
     }
   }
+`;
+
+export const RecoveryButton = styled.div`
+  padding: 15px 10px 15px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

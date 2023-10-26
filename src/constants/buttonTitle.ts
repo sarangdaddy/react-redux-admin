@@ -32,18 +32,7 @@ export interface IPage {
   name: string;
 }
 
-export const SUBMIT_BUTTON = [
-  {
-    id: 1,
-    name: '저장하기',
-  },
-  {
-    id: 2,
-    name: '복구하기',
-  },
-];
-
-export interface ISubmitButton {
-  id: number;
-  name: string;
-}
+export const SUBMIT_BUTTON = {
+  save: '저장하기',
+  recovery: '복구하기',
+};

@@ -1,13 +1,16 @@
 import { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
-import { IUser } from '@/modules/types';
-import { PROFILE_LIST } from '@/constants/label';
-import { IRootState } from '@/modules/types';
-import * as S from './styles';
 import PlusButton from '../PlusButton';
+import SubmitButton from '../SubmitButton';
+import { IUser } from '@/modules/types';
+import { IRootState } from '@/modules/types';
+import { SUBMIT_BUTTON } from '@/constants/buttonTitle';
+import { PROFILE_LIST } from '@/constants/label';
+import * as S from './styles';
 
 interface ThumbnailProps {
   isAdd?: () => void;
+  isDeleted?: () => void;
   user: IUser;
   isChecked: boolean;
   onCheckboxChange: (userId: number, checked: boolean) => void;
@@ -18,6 +21,7 @@ const Thumbnail = ({
   isChecked,
   onCheckboxChange,
   isAdd,
+  isDeleted,
 }: ThumbnailProps) => {
   const firstLetterOfNickname = user.nickname[0];
   const sexInKorean = user.sex === 'm' ? '남자' : '여자';
@@ -66,6 +70,16 @@ const Thumbnail = ({
           </div>
         </div>
       </S.Content>
+      {isDeleted && (
+        <S.RecoveryButton>
+          <SubmitButton
+            label={SUBMIT_BUTTON.recovery}
+            large
+            isActive={isChecked}
+            onClick={isDeleted}
+          />
+        </S.RecoveryButton>
+      )}
     </S.Container>
   );
 };
