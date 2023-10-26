@@ -35,7 +35,8 @@ export const addUserData = async (data: IUser, dispatch: AppDispatch) => {
 
 export const updateUserData = async (id: number, dispatch: AppDispatch) => {
   try {
-    const res = await axiosInstance.patch(`/user_data/${id}`);
+    const userToUpdate = { isDeleted: true };
+    const res = await axiosInstance.patch(`/user_data/${id}`, userToUpdate);
 
     if (res.status === 200) {
       dispatch(updateUser(id));
