@@ -19,7 +19,13 @@ interface ThumbnailProps {
 }
 
 const Thumbnail = ({
-  user,
+  user = {
+    id: 0,
+    nickname: 'Null',
+    birthday: 'Null',
+    sex: 'w',
+    isDeleted: false,
+  },
   isChecked,
   onCheckboxChange,
   onAddClick,
