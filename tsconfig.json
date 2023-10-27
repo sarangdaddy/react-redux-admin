@@ -17,6 +17,10 @@
     "jsx": "react-jsx",
     "types": ["jest", "@types/jest", "@testing-library/jest-dom"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/components/CustomCalendar/index.tsx"
+  ],
   "exclude": ["node_modules"]
 }
