@@ -38,7 +38,11 @@ const DeletedUsers = () => {
     <S.Wrapper $isMobile={isMobile} $isTablet={isTablet}>
       <S.Container $isMobile={isMobile} $isTablet={isTablet}>
         <S.Body>
-          <UserList users={deletedUsers} selectUser={selectUser} />
+          <UserList
+            users={deletedUsers}
+            selectUser={selectUser}
+            selectedUserId={selectedUser?.id}
+          />
         </S.Body>
         <Thumbnail
           onRestoreClick={restoreUser}
