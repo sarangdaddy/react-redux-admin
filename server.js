@@ -9,7 +9,7 @@ server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
 server.patch('/user_data', (req, res, next) => {
-  if (req.query.ids) {
+  if (req.query.ids && typeof req.body.isDeleted !== 'undefined') {
     const ids = req.query.ids.split(',').map((id) => parseInt(id, 10));
     const db = router.db;
 
@@ -17,7 +17,10 @@ server.patch('/user_data', (req, res, next) => {
       const user = db.get('user_data').find({ id }).value();
 
       if (user) {
-        db.get('user_data').find({ id }).assign({ isDeleted: true }).write();
+        db.get('user_data')
+          .find({ id })
+          .assign({ isDeleted: req.body.isDeleted })
+          .write();
       }
     });
 

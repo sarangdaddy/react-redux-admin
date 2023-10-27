@@ -33,9 +33,13 @@ export const addUserData = async (data: IUser, dispatch: AppDispatch) => {
   }
 };
 
-export const updateUserData = async (ids: number[], dispatch: AppDispatch) => {
+export const updateUserData = async (
+  ids: number[],
+  updateValue: boolean,
+  dispatch: AppDispatch,
+) => {
   try {
-    const userToUpdate = { isDeleted: true };
+    const userToUpdate = { isDeleted: updateValue };
     const queryString = ids.join(',');
     const res = await axiosInstance.patch(
       `/user_data?ids=${queryString}`,
