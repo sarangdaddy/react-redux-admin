@@ -50,6 +50,7 @@ const Thumbnail = ({
         {!isActive && (
           <S.Checkbox>
             <input
+              id={user?.id.toString()}
               type="checkbox"
               checked={isChecked}
               onChange={handleCheckboxChange}
