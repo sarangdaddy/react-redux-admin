@@ -9,37 +9,45 @@ import { PROFILE_LIST } from '@/constants/label';
 import * as S from './styles';
 
 interface ThumbnailProps {
-  isAdd?: () => void;
-  isDeleted?: () => void;
+  onAddClick?: () => void;
+  onRestoreClick?: (ids: number[]) => void;
   user?: IUser;
   isChecked?: boolean;
   onCheckboxChange?: (userId: number, checked: boolean) => void;
   isActive?: boolean;
+  isRestore?: boolean;
 }
 
 const Thumbnail = ({
   user,
   isChecked,
   onCheckboxChange,
-  isAdd,
-  isDeleted,
+  onAddClick,
+  onRestoreClick,
   isActive = true,
+  isRestore,
 }: ThumbnailProps) => {
   const firstLetterOfNickname = user?.nickname[0];
   const sexInKorean = user?.sex === 'm' ? '남자' : '여자';
   const isMobile = useSelector((state: IRootState) => state.media.isMobile);
   const isTablet = useSelector((state: IRootState) => state.media.isTablet);
 
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const toggleUserSelection = (e: ChangeEvent<HTMLInputElement>) => {
     if (user && onCheckboxChange) {
       onCheckboxChange(user.id, e.target.checked);
     }
   };
 
-  if (isAdd) {
+  const handleUserRestoreClick = () => {
+    if (user && onRestoreClick) {
+      onRestoreClick([user.id]);
+    }
+  };
+
+  if (onAddClick) {
     return (
       <S.AddContainer $isMobile={isMobile} $isTablet={isTablet}>
-        <PlusButton onAddUserPop={isAdd} isActive={isActive} />
+        <PlusButton onAddUserPop={onAddClick} isActive={isActive} />
       </S.AddContainer>
     );
   }
@@ -53,7 +61,7 @@ const Thumbnail = ({
               id={user?.id.toString()}
               type="checkbox"
               checked={isChecked}
-              onChange={handleCheckboxChange}
+              onChange={toggleUserSelection}
             />
           </S.Checkbox>
         )}
@@ -77,13 +85,13 @@ const Thumbnail = ({
           </div>
         </div>
       </S.Content>
-      {isDeleted && (
+      {onRestoreClick && (
         <S.RecoveryButton>
           <SubmitButton
             label={SUBMIT_BUTTON.recovery}
             large
-            isActive={isChecked}
-            onClick={isDeleted}
+            isActive={isRestore}
+            onClick={handleUserRestoreClick}
           />
         </S.RecoveryButton>
       )}
