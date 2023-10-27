@@ -4,6 +4,7 @@ import { updateUserData } from '@/apis';
 import Thumbnail from '@/components/Thumbnail';
 import { IRootState, IUser } from '@/modules/types';
 import * as S from './styles';
+import UserList from '@/components/UserList';
 
 const DeletedUsers = () => {
   const dispatch = useDispatch();
@@ -34,22 +35,16 @@ const DeletedUsers = () => {
   }, [users]);
 
   return (
-    <S.Wrapper>
-      <S.Container>
-        <S.Body $isMobile={isMobile} $isTablet={isTablet}>
-          <div>
-            {deletedUsers.map((user) => (
-              <div key={user.id} onClick={() => selectUser(user.id)}>
-                {user.nickname}
-              </div>
-            ))}
-          </div>
-          <Thumbnail
-            onRestoreClick={restoreUser}
-            user={selectedUser}
-            isRestore={isRestore}
-          />
+    <S.Wrapper $isMobile={isMobile} $isTablet={isTablet}>
+      <S.Container $isMobile={isMobile} $isTablet={isTablet}>
+        <S.Body>
+          <UserList users={deletedUsers} selectUser={selectUser} />
         </S.Body>
+        <Thumbnail
+          onRestoreClick={restoreUser}
+          user={selectedUser}
+          isRestore={isRestore}
+        />
       </S.Container>
     </S.Wrapper>
   );

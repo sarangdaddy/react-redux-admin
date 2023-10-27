@@ -3,3 +3,8 @@ export const PROFILE_LIST = {
   birthday: '생년월일',
   sex: '성별',
 };
+
+export const SEX_LIST = {
+  m: '남자',
+  w: '여자',
+};

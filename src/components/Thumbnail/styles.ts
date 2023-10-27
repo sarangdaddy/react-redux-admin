@@ -1,13 +1,26 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
-  width: ${(props) =>
-    props.$isMobile ? '327px' : props.$isTablet ? '350px' : '450px'};
+export const Container = styled.div<{
+  $isMobile: boolean;
+  $isTablet: boolean;
+  $hasRestoreClick: boolean;
+}>`
   background-color: white;
   height: 100%;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0px 5px 15px 0px #091f5b33;
+  width: ${(props) => {
+    if (props.$hasRestoreClick) {
+      if (props.$isMobile) return '350px';
+      if (props.$isTablet) return '688px';
+      return '450px';
+    } else {
+      if (props.$isMobile) return '327px';
+      if (props.$isTablet) return '350px';
+      return '450px';
+    }
+  }};
 `;
 
 export const AddContainer = styled.div<{

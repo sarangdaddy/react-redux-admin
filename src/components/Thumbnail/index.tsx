@@ -53,7 +53,11 @@ const Thumbnail = ({
   }
 
   return (
-    <S.Container $isMobile={isMobile} $isTablet={isTablet}>
+    <S.Container
+      $isMobile={isMobile}
+      $isTablet={isTablet}
+      $hasRestoreClick={!!onRestoreClick}
+    >
       <S.Header>
         {!isActive && (
           <S.Checkbox>

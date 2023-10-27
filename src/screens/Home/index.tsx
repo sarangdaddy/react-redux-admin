@@ -53,7 +53,7 @@ const Home = () => {
   };
 
   return (
-    <S.Wrapper>
+    <S.Wrapper $isMobile={isMobile} $isTablet={isTablet}>
       <S.Container>
         <S.Header>
           <FilterButton

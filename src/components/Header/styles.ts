@@ -2,6 +2,8 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.div<{ $isMobile: boolean }>`
+  position: fixed;
+  z-index: 10;
   width: 100%;
   display: flex;
   background-color: ${(props) => props.theme.colors.white};
