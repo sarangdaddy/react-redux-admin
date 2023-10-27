@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQueryClient } from '@tanstack/react-query';
 import { updateUserData, addUserData } from '@/apis';
 import FilterButton from '@/components/FilterButton';
 import Thumbnail from '@/components/Thumbnail';
@@ -14,7 +13,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const isMobile = useSelector((state: IRootState) => state.media.isMobile);
   const isTablet = useSelector((state: IRootState) => state.media.isTablet);
-  const queryClient = useQueryClient();
 
   const users = useSelector((state: IRootState) => state.users.users);
   const activeUsers = users.filter((user) => !user.isDeleted);
@@ -32,7 +30,7 @@ const Home = () => {
   };
 
   const handleDeleteUsers = (ids: number[]) => {
-    updateUserData(ids, dispatch);
+    updateUserData(ids, true, dispatch);
     setIsActive((prev) => !prev);
     setCheckedUserIds([]);
   };
@@ -47,7 +45,6 @@ const Home = () => {
     };
 
     addUserData(data, dispatch);
-    queryClient.invalidateQueries({ queryKey: ['users'] });
   };
 
   const toggleActive = () => {
@@ -69,7 +66,7 @@ const Home = () => {
           </S.Switch>
         </S.Header>
         <S.Body $isMobile={isMobile} $isTablet={isTablet}>
-          <Thumbnail isAdd={handleAdd} isActive={isActive} />
+          <Thumbnail onAddClick={handleAdd} isActive={isActive} />
           {sortedUsers.map((user) => (
             <Thumbnail
               key={user.id}

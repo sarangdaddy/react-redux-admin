@@ -40,6 +40,7 @@ export const Switch = styled.div<{ $isActive: boolean }>`
 
 export const Body = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(
     ${(props) => {
       if (props.$isMobile) return 1;
@@ -51,5 +52,14 @@ export const Body = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   gap: 35px;
   overflow-y: auto;
   max-height: calc(100vh - 140px);
-  padding-bottom: 100px;
+  padding-bottom: 80px;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 7px solid ${(props) => props.theme.colors.darkGray};
+  }
 `;
