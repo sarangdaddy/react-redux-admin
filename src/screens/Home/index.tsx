@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserData, addUserData } from '@/apis';
+import { updateUserData } from '@/apis';
 import FilterButton from '@/components/FilterButton';
 import Thumbnail from '@/components/Thumbnail';
 import Footer from '@/components/Footer';
 import sortUsers from '@/utils/sortUsers';
 import { FILTER_LIST, TOGGLE_ACTIVE } from '@/constants/buttonTitle';
-import { IRootState, IUser } from '@/modules/types';
+import { IRootState } from '@/modules/types';
 import * as S from './styles';
+import AddUserForm from '@/components/AddUserForm';
+import { MouseEvent } from 'react';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,8 @@ const Home = () => {
   const sortedUsers = sortUsers(activeUsers, currentFilter);
   const [checkedUserIds, setCheckedUserIds] = useState<number[]>([]);
   const [isActive, setIsActive] = useState<boolean>(true);
+  const [showAddUserForm, setShowAddUserForm] = useState<boolean>(false);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const onCheckboxChange = (userId: number, checked: boolean) => {
     if (checked) {
@@ -35,16 +39,18 @@ const Home = () => {
     setCheckedUserIds([]);
   };
 
-  const handleAdd = () => {
-    const data: IUser = {
-      id: 24,
-      nickname: 'SungUn',
-      birthday: '1989-04-28',
-      sex: 'm',
-      isDeleted: false,
-    };
+  const onShowAddUserForm = () => {
+    setShowAddUserForm(true);
+  };
 
-    addUserData(data, dispatch);
+  const offShowAddUserForm = () => {
+    setShowAddUserForm(false);
+  };
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (formRef.current && !formRef.current.contains(e.target as HTMLElement)) {
+      offShowAddUserForm();
+    }
   };
 
   const toggleActive = () => {
@@ -66,7 +72,7 @@ const Home = () => {
           </S.Switch>
         </S.Header>
         <S.Body $isMobile={isMobile} $isTablet={isTablet}>
-          <Thumbnail onAddClick={handleAdd} isActive={isActive} />
+          <Thumbnail onAddClick={onShowAddUserForm} isActive={isActive} />
           {sortedUsers.map((user) => (
             <Thumbnail
               key={user.id}
@@ -83,6 +89,13 @@ const Home = () => {
         checkedUserIds={checkedUserIds}
         onUsersDelete={handleDeleteUsers}
       />
+      {showAddUserForm && (
+        <S.ModalPopUp onClick={handleOutsideClick}>
+          <div ref={formRef}>
+            <AddUserForm onClose={offShowAddUserForm} />
+          </div>
+        </S.ModalPopUp>
+      )}
     </S.Wrapper>
   );
 };

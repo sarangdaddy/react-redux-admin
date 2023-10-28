@@ -64,3 +64,15 @@ export const Body = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
     border: 7px solid ${(props) => props.theme.colors.darkGray};
   }
 `;
+
+export const ModalPopUp = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
