@@ -11,8 +11,13 @@ export const Form = styled.form`
   border-radius: 5px;
   background: ${(props) => props.theme.colors.white};
   box-shadow: 0px 5px 15px 0px #091f5b33;
-  overflow-y: auto;
+
   position: relative;
+`;
+
+export const Column = styled.div`
+  width: 100%;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -22,26 +27,31 @@ export const Form = styled.form`
     border-radius: 10px;
     border: 7px solid ${(props) => props.theme.colors.darkGray};
   }
-`;
-
-export const Column = styled.div`
-  width: 100%;
 
   &:nth-child(2) {
-    padding: 10%;
+    padding: 8%;
   }
 
   &:last-child {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 5%;
+    padding-bottom: 10%;
+    padding-top: 3%;
+    overflow: hidden;
   }
 `;
 
 export const InfoOption = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const CenteredWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
 export const UserInfo = styled.div`

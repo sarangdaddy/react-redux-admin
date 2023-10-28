@@ -49,6 +49,9 @@ const AddUserForm = ({ onClose }: IAddUserFormProps) => {
             <S.Input
               {...register('nickname', {
                 required: ADD_USER_FORM.errName,
+                validate: (value) => {
+                  return !/\s/.test(value) || ADD_USER_FORM.errWhitespace;
+                },
               })}
               type="text"
               placeholder={ADD_USER_FORM.infoName}
@@ -65,26 +68,28 @@ const AddUserForm = ({ onClose }: IAddUserFormProps) => {
               readOnly
             />
           </S.UserInfo>
-          <Controller
-            name="birthday"
-            control={control}
-            render={({ field }) => (
-              <CustomCalendar
-                onDateChange={(date: Date) => {
-                  const offset = date.getTimezoneOffset();
-                  const adjustedDate = new Date(
-                    date.getTime() - offset * 60 * 1000,
-                  );
-                  const formattedDate = adjustedDate
-                    .toISOString()
-                    .split('T')[0];
-                  setSelectedDate(formattedDate);
-                  field.onChange(date);
-                }}
-              />
-            )}
-            rules={{ required: ADD_USER_FORM.errData }}
-          />
+          <S.CenteredWrapper>
+            <Controller
+              name="birthday"
+              control={control}
+              render={({ field }) => (
+                <CustomCalendar
+                  onDateChange={(date: Date) => {
+                    const offset = date.getTimezoneOffset();
+                    const adjustedDate = new Date(
+                      date.getTime() - offset * 60 * 1000,
+                    );
+                    const formattedDate = adjustedDate
+                      .toISOString()
+                      .split('T')[0];
+                    setSelectedDate(formattedDate);
+                    field.onChange(date);
+                  }}
+                />
+              )}
+              rules={{ required: ADD_USER_FORM.errData }}
+            />
+          </S.CenteredWrapper>
           <S.ErrorMessage>{formState.errors.birthday?.message}</S.ErrorMessage>
         </S.InfoOption>
         <S.InfoOption>
