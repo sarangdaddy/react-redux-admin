@@ -8,7 +8,9 @@ interface HeaderProps {
 const Header = ({ isMobile = false }: HeaderProps) => {
   return (
     <S.Container $isMobile={isMobile}>
-      <S.Title>NARA SPACE</S.Title>
+      <S.Logo>
+        <S.StyledImg />
+      </S.Logo>
       <S.Menu $isMobile={isMobile}>
         {PAGE_LIST.map((page) => (
           <S.Page key={page.id} to={page.path}>

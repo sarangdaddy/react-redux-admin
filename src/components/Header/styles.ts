@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import Naraspace from '../../assets/Naraspace.svg';
 import styled from 'styled-components';
 
 export const Container = styled.div<{ $isMobile: boolean }>`
@@ -12,13 +13,12 @@ export const Container = styled.div<{ $isMobile: boolean }>`
   flex-direction: ${(props) => (props.$isMobile ? 'column' : 'row')};
 `;
 
-export const Title = styled.div`
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const Logo = styled.div`
+  padding: 10px 20px;
+`;
+
+export const StyledImg = styled(Naraspace)`
   color: ${(props) => props.theme.colors.darkBlue};
-  font-weight: 800;
 `;
 
 export const Menu = styled.div<{ $isMobile: boolean }>`
