@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   width: 100%;
-  padding-top: ${(props) => (props.$isMobile ? '112px' : '55px')};
+  padding-top: ${(props) => (props.$isMobile ? '108px' : '55px')};
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.theme.colors.lightGray};

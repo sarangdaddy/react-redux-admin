@@ -1,15 +1,15 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserData } from '@/apis';
 import FilterButton from '@/components/FilterButton';
 import Thumbnail from '@/components/Thumbnail';
 import Footer from '@/components/Footer';
+import AddUserForm from '@/components/AddUserForm';
 import sortUsers from '@/utils/sortUsers';
 import { FILTER_LIST, TOGGLE_ACTIVE } from '@/constants/buttonTitle';
 import { IRootState } from '@/modules/types';
 import * as S from './styles';
-import AddUserForm from '@/components/AddUserForm';
-import { MouseEvent } from 'react';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -57,6 +57,18 @@ const Home = () => {
     setIsActive((prev) => !prev);
     setCheckedUserIds([]);
   };
+
+  useEffect(() => {
+    if (showAddUserForm) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showAddUserForm]);
 
   return (
     <S.Wrapper $isMobile={isMobile} $isTablet={isTablet}>
