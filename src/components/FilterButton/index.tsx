@@ -26,10 +26,10 @@ const FilterButton = ({
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (
         containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
+        !containerRef.current.contains(e.target as HTMLElement)
       ) {
         setIsOpened(false);
       }
