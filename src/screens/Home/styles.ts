@@ -65,14 +65,20 @@ export const Body = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   }
 `;
 
-export const ModalPopUp = styled.div`
+export const ModalPopUp = styled.div<{ $isMobile: boolean }>`
+  width: ${(props) => (props.$isMobile ? '350px' : '430px')};
+  height: ${(props) => (props.$isMobile ? '450px' : '630px')};
+`;
+
+export const Dimmer = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
 `;

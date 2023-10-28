@@ -90,11 +90,11 @@ const Home = () => {
         onUsersDelete={handleDeleteUsers}
       />
       {showAddUserForm && (
-        <S.ModalPopUp onClick={handleOutsideClick}>
-          <div ref={formRef}>
+        <S.Dimmer onClick={handleOutsideClick}>
+          <S.ModalPopUp ref={formRef} $isMobile={isMobile}>
             <AddUserForm onClose={offShowAddUserForm} />
-          </div>
-        </S.ModalPopUp>
+          </S.ModalPopUp>
+        </S.Dimmer>
       )}
     </S.Wrapper>
   );
