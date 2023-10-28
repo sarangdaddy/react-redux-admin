@@ -30,6 +30,15 @@ server.patch('/user_data', (req, res, next) => {
   }
 });
 
+server.post('/user_data', (req, res) => {
+  const newUser = req.body;
+  const db = router.db;
+
+  db.get('user_data').push(newUser).write();
+
+  res.status(200).jsonp(newUser);
+});
+
 server.use(router);
 server.listen(9000, () => {
   console.log('JSON Server is running on port 9000');
