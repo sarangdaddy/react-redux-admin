@@ -14,7 +14,6 @@ export const CalendarBox = styled.div<{
 export const StyleCalendar = styled(Calendar)`
   max-width: 100%;
   border: none;
-  margin-bottom: 15px;
   padding: 5px;
 
   .react-calendar__navigation {
