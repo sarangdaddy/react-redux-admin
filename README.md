@@ -125,7 +125,25 @@ npm test
 ### 5-1. Redux
 
 - 프로젝트의 root index.tsx에서 Redux 스토어를 설정하였습니다.
+
+```tsx
+// index.tsx
+const store = configureStore({
+  reducer: rootReducer,
+});
+```
+
 - 이 스토어에는 `media`와 `users` 리듀서가 포함되어 있습니다.
+
+```tsx
+// modules/index.ts
+const rootReducer = combineReducers({
+  media,
+  users,
+});
+
+export default rootReducer;
+```
 
 #### 5-1-1. Media
 
@@ -344,7 +362,7 @@ const sortedUsers = sortUsers(activeUsers, currentFilter);
 ```
 
 - 사용자는 삭제할 유저를 복수 선택할 수 있습니다.
-- 선택된 유저들의 ID는 상태로 관리됩니다.
+- 선택된 유저들의 Ids는 상태로 관리됩니다.
 
 ```tsx
 const [checkedUserIds, setCheckedUserIds] = useState<number[]>([]);
@@ -354,17 +372,19 @@ const [checkedUserIds, setCheckedUserIds] = useState<number[]>([]);
 - 성공적으로 삭제되면 해당 유저들의 상태가 업데이트됩니다.
 
 ```tsx
-<Footer
-  isActive={isActive}
-  checkedUserIds={checkedUserIds}
-  onUsersDelete={handleDeleteUsers}
-/>;
-
+// 이벤트 핸들링 함수
 const handleDeleteUsers = (ids: number[]) => {
   updateUserData(ids, true, dispatch); // 유저 정보 업데이트 요청
   setIsActive((prev) => !prev);
   setCheckedUserIds([]);
 };
+
+// 삭제하기 버튼을 가지고 있는 하단 컴포넌트
+<Footer
+  isActive={isActive}
+  checkedUserIds={checkedUserIds}
+  onUsersDelete={handleDeleteUsers}
+/>;
 
 // apis
 export const updateUserData = async (
