@@ -11,7 +11,7 @@ describe('usersReducer', () => {
   });
 
   it('Test SET_USERS action in usersReducer', () => {
-    const users: IUser[] = [
+    const user: IUser[] = [
       {
         id: 1,
         nickname: 'SungUn',
@@ -23,10 +23,10 @@ describe('usersReducer', () => {
 
     const state = usersReducer(
       initialState,
-      setUsers(users) as IUserDataActions,
+      setUsers(user) as IUserDataActions,
     );
 
-    expect(state.users).toEqual(users);
+    expect(state.users).toEqual(user);
   });
 
   it('Test ADD_USER action in usersReducer', () => {
@@ -44,13 +44,18 @@ describe('usersReducer', () => {
   });
 
   it('Test UPDATE_USERS action in usersReducer', () => {
-    initialState.users.push({
-      id: 1,
-      nickname: 'SungUn',
-      birthday: '1989-04-28',
-      sex: 'm',
-      isDeleted: false,
-    });
+    const user: IUser[] = [
+      {
+        id: 1,
+        nickname: 'SungUn',
+        birthday: '1989-04-28',
+        sex: 'm',
+        isDeleted: false,
+      },
+    ];
+    initialState.users.push(user[0]);
+
+    expect(initialState.users[0].isDeleted).toBe(false);
 
     const state = usersReducer(
       initialState,
