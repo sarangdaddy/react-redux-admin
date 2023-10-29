@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form';
 import { addUserData } from '@/apis';
 import CustomCalendar from '../CustomCalendar';
 import SubmitButton from '../SubmitButton';
-import { formatDateToString } from '@/utils/formatDateToString';
+import { formatDateToLocalTimezone } from '@/utils/formatDateToLocalTimezone';
 import { SUBMIT_BUTTON } from '@/constants/buttonTitle';
 import { ADD_USER_FORM, PROFILE_LIST, SEX_LIST } from '@/constants/label';
 import { IUser, IRootState } from '@/modules/types';
@@ -28,7 +28,7 @@ const AddUserForm = ({ onClose }: IAddUserFormProps) => {
     const newUserData: IUser = {
       id: lastId + 1,
       nickname: data.nickname,
-      birthday: formatDateToString(new Date(data.birthday)),
+      birthday: data.birthday,
       sex: data.sex,
       isDeleted: false,
     };
@@ -75,15 +75,9 @@ const AddUserForm = ({ onClose }: IAddUserFormProps) => {
               render={({ field }) => (
                 <CustomCalendar
                   onDateChange={(date: Date) => {
-                    const offset = date.getTimezoneOffset();
-                    const adjustedDate = new Date(
-                      date.getTime() - offset * 60 * 1000,
-                    );
-                    const formattedDate = adjustedDate
-                      .toISOString()
-                      .split('T')[0];
+                    const formattedDate = formatDateToLocalTimezone(date);
                     setSelectedDate(formattedDate);
-                    field.onChange(date);
+                    field.onChange(formattedDate);
                   }}
                 />
               )}
