@@ -1,23 +1,38 @@
-# Nara Space 입사지원 과제 프로젝트
+![](/src/assets/Naraspace.svg)
+
+# 🛰️ Nara Space 입사지원 과제 프로젝트
+
+- FE 신입사원 지원자 김성언
 
 </br>
 
-## 프로젝트 실행 방법
+## 📌 목차
 
-### 1. 저장소 복제
+- [1. 시작하기](#1-프로젝트-실행-방법)
+- [2. 커밋 규칙](#2-commit-prefix-소개)
+- [3. 프로젝트 구조](#3-프로젝트-구조)
+- [4. 추가 라이브러리 소개](#4-주요-추가-라이브러리)
+- [5. 상태관리 설명](#5-프로젝트-상태관리)
+- [6. 주요 기능 설명](#6-주요-기능-설명)
+
+</br>
+
+## 1. 프로젝트 실행 방법
+
+### 1-1. 저장소 복제
 
 ```bash
 git clone https://github.com/sarangdaddy/naraspace-kimsungun.git
 ```
 
-### 2. 의존성 설치
+### 1-2. 의존성 설치
 
 ```bash
 cd naraspace-kimsungun
 npm install
 ```
 
-### 3. JSON 서버 시작
+### 1-3. JSON 서버 시작
 
 ```bash
 npm run server
@@ -25,7 +40,7 @@ npm run server
 
 - http://localhost:9000 에서 JSON 서버의 데이터를 확인할 수 있습니다.
 
-### 4. 프로젝트 시작
+### 1-4. 프로젝트 시작
 
 ```bash
 npm start
@@ -33,7 +48,7 @@ npm start
 
 - http://localhost:3010 에서 애플리케이션을 확인할 수 있습니다.
 
-### 5. TEST
+### 1-5. TEST
 
 ```bash
 npm test
@@ -43,7 +58,7 @@ npm test
 
 </br>
 
-## Commit Prefix 소개
+## 2. Commit Prefix 소개
 
 - FEAT : 기능 구현
 - EDIT : 코드 수정
@@ -62,7 +77,7 @@ npm test
 
 # 프로젝트 설명
 
-## 프로젝트 구조
+## 3. 프로젝트 구조
 
 ```
 📦 NARASPACE
@@ -89,7 +104,7 @@ npm test
 
 </br>
 
-## 주요 추가 라이브러리
+## 4. 주요 추가 라이브러리
 
 - Axios : 프로젝트 확장성을 고려하여 axios를 사용했습니다.
 - TanStack(React) Query : 데이터 캐싱 및 에러 바운더리 등의 확장성을 위해 사용했습니다.
@@ -100,19 +115,19 @@ npm test
 
 </br>
 
-## 프로젝트 상태관리
+## 5. 프로젝트 상태관리
 
 프로젝트의 상태 관리는 Redux와 React Query를 활용하고 있습니다.
 
 - Redux는 애플리케이션의 전역 상태를 관리합니다.
 - React Query는 서버 상태 및 비동기 데이터 요청을 처리합니다.
 
-### Redux
+### 5-1. Redux
 
 - 프로젝트의 root index.tsx에서 Redux 스토어를 설정하였습니다.
 - 이 스토어에는 `media`와 `users` 리듀서가 포함되어 있습니다.
 
-#### 1. Media
+#### 5-1-1. Media
 
 - `SET_IS_MOBILE`, `SET_IS_TABLET`, `SET_IS_DESKTOP` 액션 타입들을 사용하여 현재의 상태를 리듀서로 전달합니다.
 - `mediaReducer`는 받은 타입에 따라 적절한 상태를 변경하고 반환합니다.
@@ -132,17 +147,45 @@ const mediaReducer = (state = initialState, action: IMediaActions) => {
   }
 ```
 
-```
-Redux 전역에서 관리하는 Media 상태를 통해 반응형 웹을 구현했습니다.
-Layout에서 디바이스 타입을 감지하고 해당 타입에 따라 전역 상태를 업데이트합니다.
-이 상태는 컴포넌트의 스타일을 조절하는 데 사용됩니다.
-```
+> Redux 전역에서 관리하는 Media 상태를 통해 반응형 웹을 구현했습니다.
+
+- Layout에서 디바이스 타입을 감지하고 해당 타입에 따라 전역 상태를 업데이트합니다.
 
 ```tsx
-// jsx
-  return (
-    <S.ModalPopUp $isMobile={isMobile}>
-  )
+const Layout = () => {
+  const dispatch = useDispatch();
+  const mobileQuery = useMediaQuery('(max-width: 767px)');
+  const tabletQuery = useMediaQuery(
+    '(min-width: 768px) and (max-width: 1249px)',
+  );
+  const desktopQuery = useMediaQuery('(min-width: 1250px)');
+
+  useEffect(() => {
+    if (mobileQuery) {
+      dispatch(setIsMobile(true));
+      dispatch(setIsTablet(false));
+      dispatch(setIsDesktop(false));
+    } else if (tabletQuery) {
+      dispatch(setIsTablet(true));
+      dispatch(setIsMobile(false));
+      dispatch(setIsDesktop(false));
+    } else if (desktopQuery) {
+      dispatch(setIsDesktop(true));
+      dispatch(setIsMobile(false));
+      dispatch(setIsTablet(false));
+    }
+  }, [mobileQuery, tabletQuery, desktopQuery, dispatch]);
+```
+
+- 이 상태는 컴포넌트의 스타일을 조절하는 데 사용됩니다.
+
+```tsx
+// 컴포넌트
+const isMobile = useSelector((state: IRootState) => state.media.isMobile);
+
+return (
+  <S.ModalPopUp $isMobile={isMobile}>
+)
 ```
 
 ```ts
@@ -153,7 +196,7 @@ export const ModalPopUp = styled.div<{ $isMobile: boolean }>`
 `;
 ```
 
-#### 2. Users
+#### 5-1-2. Users
 
 - `SET_USERS`, `ADD_USER`, `UPDATE_USERS` 액션 타입을 통해 유저 데이터 상태를 리듀서로 전달합니다.
 - `usersReducer`는 받은 타입에 따라 적절한 상태를 변경하고 반환합니다.
@@ -190,25 +233,22 @@ const usersReducer = (
 };
 ```
 
-```
-Redux 전역 상태를 사용하여 모든 컴포넌트에서 유저 데이터를 활용할 수 있습니다.
-특정 컴포넌트에서 상태 변경이 발생하면, 해당 변경 사항은 전체 애플리케이션에 바로 반영됩니다.
-```
+> Redux 전역 상태를 사용하여 모든 컴포넌트에서 유저 데이터를 활용하고 변경할 수 있습니다.
+
+- 특정 컴포넌트에서 상태 변경이 발생하면, 해당 변경 사항은 전체 애플리케이션에 바로 반영됩니다.
 
 ```jsx
-// Home - 유저 삭제 처리
+// Home 컴포넌트 - 유저 삭제 처리
 const handleDeleteUsers = (ids: number[]) => {
   updateUserData(ids, true, dispatch);
-  setIsActive((prev) => !prev);
-  setCheckedUserIds([]);
 };
 
-// DeletedUsers - 유저 복구 처리
+// DeletedUsers 컴포넌트 - 유저 복구 처리
 const restoreUser = (ids: number[]) => {
   updateUserData(ids, false, dispatch);
 };
 
-// AddUserForm - 새로운 유저 추가 처리
+// AddUserForm 컴포넌트 - 새로운 유저 추가 처리
 const onSubmit = (data: IUser) => {
   const newUserData: IUser = {
     id: lastId + 1,
@@ -219,51 +259,60 @@ const onSubmit = (data: IUser) => {
   };
 
   addUserData(newUserData, dispatch);
-  onClose();
 };
 ```
 
-### React Query
+### 5-2. React Query
 
 - 프로젝트 root index.tsx에 `QueryClient`를 설정하고 App 전체에 제공합니다.
 - App 컴포넌트에서 `useQuery`를 통해 user_data를 요청하고 Redux의 `users` 스토어에 저장합니다.
-- React Query는 데이터를 캐시하여 data의 상태 변경이 없다면 App이 재렌더링 되어도 새로운 데이터 요청을 보내지 않습니다.
+- React Query는 데이터를 캐싱하여 data의 변경이 없다면 App이 재렌더링 되어도 새로운 데이터 요청을 보내지 않습니다.
 
 ```tsx
-// App - 유저 데이터 요청 및 저장
-const { isLoading, data } = useQuery<IUser[]>({
+// App 컴포넌트 - 유저 데이터 요청 및 저장
+const dispatch = useDispatch();
+const { isLoading } = useQuery<IUser[]>({
   queryKey: ['users'],
-  queryFn: getUsersData,
+  queryFn: () => getUsersData(dispatch),
 });
 
-useEffect(() => {
-  if (data) {
-    dispatch(setUsers(data));
+// apis
+export const getUsersData = async (dispatch: AppDispatch) => {
+  try {
+    const res = await axiosInstance.get(`/user_data`);
+    if (res.status === 200) {
+      dispatch(setUsers(res.data));
+      return res.data;
+    }
+  } catch (err) {
+    throw err;
   }
-}, [data, dispatch]);
+};
 ```
-
-핵심 기능: 프로젝트에서 중요한 기능들에 대한 설명과, 그 기능을 구현하기 위해 사용한 주요 코드 스니펫 또는 알고리즘.
-API 설명: 프로젝트에 RESTful API나 다른 API를 사용했다면, 주요 엔드포인트와 그 엔드포인트가 수행하는 작업에 대한 설명.
 
 </br>
 
-## 주요 기능 설명
+## 6. 주요 기능 설명
 
-### Home 유저 리스트 필터
-
-```jsx
-const users = useSelector((state: IRootState) => state.users.users);
-const activeUsers = users.filter((user) => !user.isDeleted);
-const [currentFilter, setCurrentFilter] = useState(FILTER_LIST[0]);
-const sortedUsers = sortUsers(activeUsers, currentFilter);
-```
+### 6-1. Home 유저 리스트 필터
 
 - 전체 유저 리스트에서 삭제되지 않은 유저를 가져옵니다.
-- Home컴포넌트에서 현재 필터 상태를 관리힙니다.
-- 삭제되지 않은 유저와 필터를 헬퍼 함수를 통해 유저 목록을 생성합니다.
 
 ```tsx
+const users = useSelector((state: IRootState) => state.users.users);
+const activeUsers = users.filter((user) => !user.isDeleted);
+```
+
+- Home컴포넌트에서 현재필터 상태를 관리합니다.
+- 삭제되지 않은 유저 데이터와 현재필터를 헬퍼 함수에 전달하여 필터에 맞게 정렬된 유저 목록을 생성합니다.
+
+```tsx
+// Home 컴포넌트
+const [currentFilter, setCurrentFilter] = useState(FILTER_LIST[0]);
+const sortedUsers = sortUsers(activeUsers, currentFilter);
+
+
+// JSX
 {sortedUsers.map((user) => (
     <Thumbnail
      key={user.id}
@@ -274,7 +323,7 @@ const sortedUsers = sortUsers(activeUsers, currentFilter);
     />
 ```
 
-- FilterButton을 사용하여 사용자에게 현재 필터 상태를 변경할 수 있는 옵션을 제공합니다.
+- FilterButton 컴포넌트를 통해 사용자가 현재 필터 상태를 변경할 수 있는 기능을 제공합니다.
 
 ```tsx
 <FilterButton
@@ -284,9 +333,9 @@ const sortedUsers = sortUsers(activeUsers, currentFilter);
 />
 ```
 
-### Home 유저 선택 및 삭제
+### 6-2. Home 유저 선택 및 삭제
 
-- 선택 버튼이 활성화 되면 썸네일에 `체크박스`와 하단에 유저 `삭제하기` 버튼이 활성화 됩니다.
+- `선택` 버튼이 활성화 되면 썸네일에 `체크박스`와 하단에 유저 `삭제하기` 버튼이 활성화 됩니다.
 
 ```tsx
 <S.Switch onClick={toggleActive} $isActive={isActive}>
@@ -294,6 +343,7 @@ const sortedUsers = sortUsers(activeUsers, currentFilter);
 </S.Switch>
 ```
 
+- 사용자는 삭제할 유저를 복수 선택할 수 있습니다.
 - 선택된 유저들의 ID는 상태로 관리됩니다.
 
 ```tsx
@@ -311,7 +361,7 @@ const [checkedUserIds, setCheckedUserIds] = useState<number[]>([]);
 />;
 
 const handleDeleteUsers = (ids: number[]) => {
-  updateUserData(ids, true, dispatch);
+  updateUserData(ids, true, dispatch); // 유저 정보 업데이트 요청
   setIsActive((prev) => !prev);
   setCheckedUserIds([]);
 };
@@ -339,17 +389,23 @@ export const updateUserData = async (
 };
 ```
 
-### 새로운 유저 등록하기
+### 6-3. 새로운 유저 등록하기
 
-- Home 화면의 첫 썸네일에서는 사용자에게 회원 등록 기능을 제공합니다.
+- Home 화면의 첫 썸네일에서는 사용자에게 유저 등록 기능을 제공합니다.
 
 ```tsx
 <Thumbnail onAddClick={onShowAddUserForm} isActive={isActive} />
 ```
 
-- 배경 딤처리와 함께 AddUserForm 컴포넌트가 모달 형태로 나타납니다.
+- 이 썸네일의 버튼을 클릭하면 배경 딤처리와 함께 AddUserForm 컴포넌트가 모달 형태로 나타납니다.
 
 ```tsx
+// 이벤트 핸들링 함수
+const onShowAddUserForm = () => {
+  setShowAddUserForm(true);
+};
+
+// JSX
 {
   showAddUserForm && (
     <S.Dimmer onClick={handleOutsideClick}>
@@ -361,17 +417,19 @@ export const updateUserData = async (
 }
 ```
 
-- `AddUserForm` 컴포넌트 내에서는 Redux를 사용하여 현재의 users 데이터를 가져와서 새로운 사용자의 ID 값을 계산합니다.
+- `AddUserForm` 컴포넌트 내에서는 Redux를 사용하여 현재의 users 데이터를 가져와서 새로운 유저의 ID 값을 계산합니다.
 
 ```tsx
+// AddUserForm 컴포넌트
 const users = useSelector((state: IRootState) => state.users.users);
 const lastId = users[users.length - 1]?.id || 0;
 ```
 
-- 회원 등록을 위한 폼은 `React Hook Form`을 활용하여 구현되어 있습니다.
-- 이를 통해 사용자가 입력한 데이터를 수집하고, 새로운 회원 데이터를 생성하여 API를 통해 서버에 추가 요청을 합니다.
+- 유저 등록을 위한 폼은 `React Hook Form`을 활용하여 구현되어 있습니다.
+- 이를 통해 사용자가 입력한 데이터를 수집하고, 새로운 유저 데이터를 생성하여 API를 통해 서버에 유저 추가 요청을 합니다.
 
 ```tsx
+// AddUserForm 컴포넌트
 const { register, handleSubmit, formState, control, setValue, trigger } =
   useForm<IUser>();
 
@@ -402,14 +460,16 @@ export const addUserData = async (data: IUser, dispatch: AppDispatch) => {
 };
 ```
 
-### 삭제된 유저 페이지
+### 6-4. 삭제된 유저 페이지
 
-- 전체 유저 리스트 중 삭제된 유저들의 목록을 보여줍니다.
+- 전체 유저 데이터 중 삭제된 유저들의 목록을 보여줍니다.
 
 ```tsx
+// DeletedUsers 컴포넌트
 const users = useSelector((state: IRootState) => state.users.users);
 const deletedUsers = users.filter((user) => user.isDeleted);
 
+// JSX
 <UserList
   users={deletedUsers}
   selectUser={selectUser}
@@ -419,10 +479,11 @@ const deletedUsers = users.filter((user) => user.isDeleted);
 
 - 페이지에서는 삭제된 유저 리스트 중 `선택`된 유저의 썸네일을 나타냅니다.
 - 첫 렌더링에서는 가장 상위 유저가 선택되어 있습니다.
-- 사용자가 특정 유저를 선택하면 선택된 유저 상태로 썸네일이 변경되며
+- 사용자가 특정 유저를 선택하면 선택된 유저 상태로 썸네일이 변경되며,
 - 해당 유저 썸네일의 `복구하기` 버튼이 활성화 됩니다.
 
 ```tsx
+// DeletedUsers 컴포넌트
 const [selectedUser, setSelectedUser] = useState<IUser | undefined>(
   deletedUsers[0],
 );
@@ -435,6 +496,7 @@ const selectUser = (id: number) => {
   setOnRestoreBtn(true);
 };
 
+// JSX
 <Thumbnail
   onRestoreClick={restoreUser}
   user={selectedUser}
@@ -445,9 +507,30 @@ const selectUser = (id: number) => {
 - 활성화된 `복구하기` 버튼을 클릭하면, 해당 유저의 데이터를 서버에 복구 요청하는 API를 호출합니다.
 
 ```tsx
+// DeletedUsers 컴포넌트
 const restoreUser = (ids: number[]) => {
-  updateUserData(ids, false, dispatch);
+  updateUserData(ids, false, dispatch); // 유저 정보 업데이트 요청
+};
+
+// apis
+export const updateUserData = async (
+  ids: number[],
+  updateValue: boolean,
+  dispatch: AppDispatch,
+) => {
+  try {
+    const userToUpdate = { isDeleted: updateValue };
+    const queryString = ids.join(',');
+    const res = await axiosInstance.patch(
+      `/user_data?ids=${queryString}`,
+      userToUpdate,
+    );
+
+    if (res.status === 200) {
+      dispatch(updateUsers(ids));
+    }
+  } catch (err) {
+    return err;
+  }
 };
 ```
-
-</br>
