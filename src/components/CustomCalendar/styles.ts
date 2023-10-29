@@ -54,20 +54,20 @@ export const StyleCalendar = styled(Calendar)`
   }
 
   .react-calendar__tile--hasActive {
-    color: #ffffff;
+    color: ${(props) => props.theme.colors.white};
     background-color: ${(props) => props.theme.colors.darkSkyBlue};
     border-radius: 5px;
+  }
+
+  .react-calendar__tile--active {
+    color: ${(props) => props.theme.colors.white};
+    background-color: ${(props) => props.theme.colors.darkSkyBlue};
+    border-radius: 7px;
   }
 
   .react-calendar__tile--hasActive:enabled:hover,
   .react-calendar__tile--hasActive:enabled:focus {
     background-color: ${(props) => props.theme.colors.darkSkyBlue};
-  }
-
-  .react-calendar__tile--active {
-    color: #ffffff;
-    background-color: ${(props) => props.theme.colors.darkSkyBlue};
-    border-radius: 7px;
   }
 
   .react-calendar__tile--active:enabled:hover,
@@ -87,7 +87,7 @@ export const StyleCalendar = styled(Calendar)`
   }
 
   .react-calendar__month-view__days__day--weekend {
-    color: black;
+    color: ${(props) => props.theme.colors.black};
   }
 
   .react-calendar__tile--now {
@@ -100,10 +100,6 @@ export const StyleCalendar = styled(Calendar)`
 
   .react-calendar__tile {
     border-radius: 10px;
-  }
-
-  .react-calendar__month-view__days__day--weekend.react-calendar__tile--active {
-    color: white;
   }
 
   .react-calendar__tile--disabled:hover {
@@ -138,6 +134,6 @@ export const StyleCalendar = styled(Calendar)`
   }
 
   .react-calendar__year-view__months__month:not([disabled]):hover {
-    color: white;
+    color: ${(props) => props.theme.colors.white};
   }
 `;
