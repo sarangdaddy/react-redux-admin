@@ -15,7 +15,7 @@ interface ThumbnailProps {
   isChecked?: boolean;
   onCheckboxChange?: (userId: number, checked: boolean) => void;
   isActive?: boolean;
-  isRestore?: boolean;
+  isOnRestoreBtn?: boolean;
 }
 
 const Thumbnail = ({
@@ -31,7 +31,7 @@ const Thumbnail = ({
   onAddClick,
   onRestoreClick,
   isActive = true,
-  isRestore,
+  isOnRestoreBtn,
 }: ThumbnailProps) => {
   const firstLetterOfNickname = user?.nickname[0];
   const sexInKorean = user?.sex === 'm' ? '남자' : '여자';
@@ -100,7 +100,7 @@ const Thumbnail = ({
           <SubmitButton
             label={SUBMIT_BUTTON.recovery}
             large
-            isActive={isRestore}
+            isActive={isOnRestoreBtn}
             onClick={handleUserRestoreClick}
           />
         </S.RecoveryButton>

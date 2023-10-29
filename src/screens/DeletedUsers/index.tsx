@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserData } from '@/apis';
 import Thumbnail from '@/components/Thumbnail';
+import UserList from '@/components/UserList';
 import { IRootState, IUser } from '@/modules/types';
 import * as S from './styles';
-import UserList from '@/components/UserList';
 
 const DeletedUsers = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const DeletedUsers = () => {
   const [selectedUser, setSelectedUser] = useState<IUser | undefined>(
     deletedUsers[0],
   );
-  const [isRestore, setIsRestore] = useState<boolean>(false);
+  const [onRestoreBtn, setOnRestoreBtn] = useState<boolean>(false);
 
   const restoreUser = (ids: number[]) => {
     updateUserData(ids, false, dispatch);
@@ -26,12 +26,12 @@ const DeletedUsers = () => {
     if (selectedUser?.id !== id) {
       setSelectedUser(deletedUsers.find((user) => user.id === id));
     }
-    setIsRestore(true);
+    setOnRestoreBtn(true);
   };
 
   useEffect(() => {
     setSelectedUser(deletedUsers[0]);
-    setIsRestore(false);
+    setOnRestoreBtn(false);
   }, [users]);
 
   return (
@@ -47,7 +47,7 @@ const DeletedUsers = () => {
         <Thumbnail
           onRestoreClick={restoreUser}
           user={selectedUser}
-          isRestore={isRestore}
+          isOnRestoreBtn={onRestoreBtn}
         />
       </S.Container>
     </S.Wrapper>

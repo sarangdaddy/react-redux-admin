@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import useMediaQuery from 'beautiful-react-hooks/useMediaQuery';
 import { setIsMobile, setIsTablet, setIsDesktop } from '@/modules/media';
-import { IRootState } from '@/modules/types';
 import Header from '@/components/Header';
 
 const Layout = () => {
@@ -30,11 +29,9 @@ const Layout = () => {
     }
   }, [mobileQuery, tabletQuery, desktopQuery, dispatch]);
 
-  const isMobile = useSelector((state: IRootState) => state.media.isMobile);
-
   return (
     <>
-      <Header isMobile={isMobile} />
+      <Header />
       <Outlet />
     </>
   );
