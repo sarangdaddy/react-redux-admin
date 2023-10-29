@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { IUser } from '@/modules/types';
-import { addUser, updateUsers } from '@/modules/users';
+import { setUsers, addUser, updateUsers } from '@/modules/users';
 import { AppDispatch } from '../index';
 
 const BASE_API_URL = 'http://localhost:9000';
@@ -12,12 +12,15 @@ const axiosInstance = axios.create({
   },
 });
 
-export const getUsersData = async () => {
+export const getUsersData = async (dispatch: AppDispatch) => {
   try {
     const res = await axiosInstance.get(`/user_data`);
-    return res.data;
+    if (res.status === 200) {
+      dispatch(setUsers(res.data));
+      return res.data;
+    }
   } catch (err) {
-    return err;
+    throw err;
   }
 };
 
