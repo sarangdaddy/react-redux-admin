@@ -14,6 +14,7 @@
 - [4. 추가 라이브러리 소개](#4-주요-추가-라이브러리)
 - [5. 상태관리 설명](#5-프로젝트-상태관리)
 - [6. 주요 기능 설명](#6-주요-기능-설명)
+- [7. 보완점](#7-보완점)
 
 </br>
 
@@ -554,3 +555,9 @@ export const updateUserData = async (
   }
 };
 ```
+
+</br>
+
+## 7. 보완점
+
+- [개인적인 학습을 위한 추가 작업 - 반응형 재설계](https://github.com/sarangdaddy/naraspace-kimsungun/tree/refactor-branch)
