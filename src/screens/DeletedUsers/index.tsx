@@ -8,8 +8,6 @@ import * as S from './styles';
 
 const DeletedUsers = () => {
   const dispatch = useDispatch();
-  const isMobile = useSelector((state: IRootState) => state.media.isMobile);
-  const isTablet = useSelector((state: IRootState) => state.media.isTablet);
 
   const users = useSelector((state: IRootState) => state.users.users);
   const deletedUsers = users.filter((user) => user.isDeleted);
@@ -35,8 +33,8 @@ const DeletedUsers = () => {
   }, [users]);
 
   return (
-    <S.Wrapper $isMobile={isMobile} $isTablet={isTablet}>
-      <S.Container $isMobile={isMobile} $isTablet={isTablet}>
+    <S.Wrapper>
+      <S.Container>
         <S.Body>
           <UserList
             users={deletedUsers}

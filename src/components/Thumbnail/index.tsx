@@ -1,9 +1,7 @@
 import { ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
 import PlusButton from '../PlusButton';
 import SubmitButton from '../SubmitButton';
 import { IUser } from '@/modules/types';
-import { IRootState } from '@/modules/types';
 import { SUBMIT_BUTTON } from '@/constants/buttonTitle';
 import { PROFILE_LIST } from '@/constants/label';
 import * as S from './styles';
@@ -35,8 +33,6 @@ const Thumbnail = ({
 }: ThumbnailProps) => {
   const firstLetterOfNickname = user?.nickname[0];
   const sexInKorean = user?.sex === 'm' ? '남자' : '여자';
-  const isMobile = useSelector((state: IRootState) => state.media.isMobile);
-  const isTablet = useSelector((state: IRootState) => state.media.isTablet);
 
   const toggleUserSelection = (e: ChangeEvent<HTMLInputElement>) => {
     if (user && onCheckboxChange) {
@@ -52,18 +48,14 @@ const Thumbnail = ({
 
   if (onAddClick) {
     return (
-      <S.AddContainer $isMobile={isMobile} $isTablet={isTablet}>
+      <S.AddContainer>
         <PlusButton onAddUserPop={onAddClick} isActive={isActive} />
       </S.AddContainer>
     );
   }
 
   return (
-    <S.Container
-      $isMobile={isMobile}
-      $isTablet={isTablet}
-      $hasRestoreClick={!!onRestoreClick}
-    >
+    <S.Container $hasRestoreClick={!!onRestoreClick}>
       <S.Header>
         {!isActive && (
           <S.Checkbox>

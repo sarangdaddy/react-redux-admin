@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
 import { IUser } from '@/modules/types';
-import { IRootState } from '@/modules/types';
 import { PROFILE_LIST, SEX_LIST } from '@/constants/label';
 import * as S from './styles';
 
@@ -11,11 +9,8 @@ interface UserListProps {
 }
 
 const UserList = ({ users, selectUser, selectedUserId }: UserListProps) => {
-  const isMobile = useSelector((state: IRootState) => state.media.isMobile);
-  const isTablet = useSelector((state: IRootState) => state.media.isTablet);
-
   return (
-    <S.Container $isMobile={isMobile} $isTablet={isTablet}>
+    <S.Container>
       <S.Header>
         <span>{PROFILE_LIST.name}</span>
         <span>{PROFILE_LIST.birthday}</span>

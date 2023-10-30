@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
+export const Wrapper = styled.div`
   width: 100%;
-  padding-top: ${(props) => (props.$isMobile ? '108px' : '55px')};
+  padding-top: 55px;
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.theme.colors.lightGray};
+
+  ${(props) => props.theme.media.mobile} {
+    padding-top: 108px;
+  }
 `;
 
 export const Container = styled.div`
@@ -39,21 +43,22 @@ export const Switch = styled.div<{ $isActive: boolean }>`
     props.$isActive ? props.theme.colors.darkBlue : props.theme.colors.white};
 `;
 
-export const Body = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
+export const Body = styled.div`
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(
-    ${(props) => {
-      if (props.$isMobile) return 1;
-      if (props.$isTablet) return 2;
-      return 3;
-    }},
-    1fr
-  );
+  grid-template-columns: repeat(3, 1fr);
   gap: 35px;
   overflow-y: auto;
   max-height: calc(100vh - 140px);
   padding-bottom: 80px;
+
+  ${(props) => props.theme.media.mobile} {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  ${(props) => props.theme.media.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -65,9 +70,14 @@ export const Body = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
   }
 `;
 
-export const ModalPopUp = styled.div<{ $isMobile: boolean }>`
-  width: ${(props) => (props.$isMobile ? '350px' : '430px')};
-  height: ${(props) => (props.$isMobile ? '450px' : '630px')};
+export const ModalPopUp = styled.div`
+  width: 430px;
+  height: 630px;
+
+  ${(props) => props.theme.media.mobile} {
+    width: 350px;
+    height: 450px;
+  }
 `;
 
 export const Dimmer = styled.div`

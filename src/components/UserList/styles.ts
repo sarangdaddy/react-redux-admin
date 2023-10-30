@@ -1,16 +1,24 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{ $isMobile: boolean; $isTablet: boolean }>`
-  width: ${(props) =>
-    props.$isMobile ? '350px' : props.$isTablet ? '688px' : '935px'};
-  height: ${(props) =>
-    props.$isMobile || props.$isTablet ? '500px' : '630px'};
+export const Container = styled.div`
+  width: 935px;
+  height: 630px;
   background-color: ${(props) => props.theme.colors.white};
   border-radius: 10px;
   box-shadow: 0px 5px 15px 0px #091f5b33;
   padding: 10px;
   display: flex;
   flex-direction: column;
+
+  ${(props) => props.theme.media.mobile} {
+    width: 350px;
+    height: 500px;
+  }
+
+  ${(props) => props.theme.media.tablet} {
+    width: 688px;
+    height: 500px;
+  }
 `;
 
 export const Header = styled.div`

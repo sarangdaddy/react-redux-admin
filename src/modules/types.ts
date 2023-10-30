@@ -1,31 +1,3 @@
-// media
-export const SET_IS_MOBILE = 'media/SET_IS_MOBILE';
-export const SET_IS_TABLET = 'media/SET_IS_TABLET';
-export const SET_IS_DESKTOP = 'media/SET_IS_DESKTOP';
-
-export interface IMobileAction {
-  type: typeof SET_IS_MOBILE;
-  payload: boolean;
-}
-
-export interface ITabletAction {
-  type: typeof SET_IS_TABLET;
-  payload: boolean;
-}
-
-export interface IDesktopAction {
-  type: typeof SET_IS_DESKTOP;
-  payload: boolean;
-}
-
-export type IMediaActions = IMobileAction | ITabletAction | IDesktopAction;
-
-export interface IMediaState {
-  isMobile: boolean;
-  isTablet: boolean;
-  isDesktop: boolean;
-}
-
 // user_data
 export const SET_USERS = 'users/SET_USERS';
 export const ADD_USER = 'users/ADD_USER';
@@ -65,6 +37,5 @@ export interface IUserDataState {
 
 // root
 export interface IRootState {
-  media: IMediaState;
   users: IUserDataState;
 }

@@ -13,8 +13,6 @@ import * as S from './styles';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const isMobile = useSelector((state: IRootState) => state.media.isMobile);
-  const isTablet = useSelector((state: IRootState) => state.media.isTablet);
 
   const users = useSelector((state: IRootState) => state.users.users);
   const activeUsers = users.filter((user) => !user.isDeleted);
@@ -71,7 +69,7 @@ const Home = () => {
   }, [showAddUserForm]);
 
   return (
-    <S.Wrapper $isMobile={isMobile} $isTablet={isTablet}>
+    <S.Wrapper>
       <S.Container>
         <S.Header>
           <FilterButton
@@ -83,7 +81,7 @@ const Home = () => {
             {isActive ? TOGGLE_ACTIVE.on : TOGGLE_ACTIVE.off}
           </S.Switch>
         </S.Header>
-        <S.Body $isMobile={isMobile} $isTablet={isTablet}>
+        <S.Body>
           <Thumbnail onAddClick={onShowAddUserForm} isActive={isActive} />
           {sortedUsers.map((user) => (
             <Thumbnail
@@ -103,7 +101,7 @@ const Home = () => {
       />
       {showAddUserForm && (
         <S.Dimmer onClick={handleOutsideClick}>
-          <S.ModalPopUp ref={formRef} $isMobile={isMobile}>
+          <S.ModalPopUp ref={formRef}>
             <AddUserForm onClose={offShowAddUserForm} />
           </S.ModalPopUp>
         </S.Dimmer>
