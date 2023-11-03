@@ -13,5 +13,11 @@ declare module 'styled-components' {
       darkBlue: string;
       black: string;
     };
+
+    media: {
+      mobile: string;
+      tablet: string;
+      desktop: string;
+    };
   }
 }
