@@ -1,16 +1,16 @@
 import { RouterProvider } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
-import { getUsersData } from '@/apis';
-import { router } from '@/router';
-import { IUser } from '@/modules/types';
+import { useDispatch } from 'react-redux';
+import { getUsersData } from '@/modules/users';
 import { AppDispatch } from '@/index';
+import { router } from '@/router';
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { isLoading } = useQuery<IUser[]>({
+
+  const { isLoading } = useQuery({
     queryKey: ['users'],
-    queryFn: () => getUsersData(dispatch),
+    queryFn: () => dispatch(getUsersData()),
   });
 
   return (

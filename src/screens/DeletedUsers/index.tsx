@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserData } from '@/apis';
+import { AppDispatch, RootState } from '@/index';
+import { IUser, updateUsersData } from '@/modules/users';
 import Thumbnail from '@/components/Thumbnail';
 import UserList from '@/components/UserList';
-import { IRootState, IUser } from '@/modules/types';
 import * as S from './styles';
-import { AppDispatch } from '@/index';
 
 const DeletedUsers = () => {
   const dispatch: AppDispatch = useDispatch();
-
-  const users = useSelector((state: IRootState) => state.users.users);
+  const users = useSelector((state: RootState) => state.users.users);
   const deletedUsers = users.filter((user) => user.isDeleted);
   const [selectedUser, setSelectedUser] = useState<IUser | undefined>(
     deletedUsers[0],
@@ -18,7 +16,7 @@ const DeletedUsers = () => {
   const [onRestoreBtn, setOnRestoreBtn] = useState<boolean>(false);
 
   const restoreUser = (ids: number[]) => {
-    updateUserData(ids, false, dispatch);
+    dispatch(updateUsersData({ ids: ids, updateValue: false }));
   };
 
   const selectUser = (id: number) => {

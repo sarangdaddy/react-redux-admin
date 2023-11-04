@@ -36,7 +36,7 @@ server.post('/user_data', (req, res) => {
 
   db.get('user_data').push(newUser).write();
 
-  res.status(200).jsonp(newUser);
+  res.status(201).jsonp(newUser);
 });
 
 server.use(router);

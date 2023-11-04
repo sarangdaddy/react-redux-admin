@@ -8,13 +8,13 @@ import { theme } from './styles/theme';
 import GlobalStyle from './styles/GlobalStyle';
 import App from './components/App';
 import rootReducer from './modules';
-import myLogger from './middlewares/myLogger';
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myLogger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 const queryClient = new QueryClient();

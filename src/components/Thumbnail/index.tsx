@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
+import { IUser } from '@/modules/users';
 import PlusButton from '../PlusButton';
 import SubmitButton from '../SubmitButton';
-import { IUser } from '@/modules/types';
 import { SUBMIT_BUTTON } from '@/constants/buttonTitle';
 import { PROFILE_LIST } from '@/constants/label';
 import * as S from './styles';
