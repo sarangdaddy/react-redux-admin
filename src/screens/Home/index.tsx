@@ -10,9 +10,10 @@ import sortUsers from '@/utils/sortUsers';
 import { FILTER_LIST, TOGGLE_ACTIVE } from '@/constants/buttonTitle';
 import { IRootState } from '@/modules/types';
 import * as S from './styles';
+import { AppDispatch } from '@/index';
 
 const Home = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const users = useSelector((state: IRootState) => state.users.users);
   const activeUsers = users.filter((user) => !user.isDeleted);

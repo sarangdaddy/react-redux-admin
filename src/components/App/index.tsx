@@ -4,9 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { getUsersData } from '@/apis';
 import { router } from '@/router';
 import { IUser } from '@/modules/types';
+import { AppDispatch } from '@/index';
 
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const { isLoading } = useQuery<IUser[]>({
     queryKey: ['users'],
     queryFn: () => getUsersData(dispatch),

@@ -5,9 +5,10 @@ import Thumbnail from '@/components/Thumbnail';
 import UserList from '@/components/UserList';
 import { IRootState, IUser } from '@/modules/types';
 import * as S from './styles';
+import { AppDispatch } from '@/index';
 
 const DeletedUsers = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const users = useSelector((state: IRootState) => state.users.users);
   const deletedUsers = users.filter((user) => user.isDeleted);
