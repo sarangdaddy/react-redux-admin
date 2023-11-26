@@ -1,22 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserData } from '@/apis';
+import { AppDispatch, RootState } from '@/index';
+import { updateUsersData } from '@/modules/users';
 import FilterButton from '@/components/FilterButton';
 import Thumbnail from '@/components/Thumbnail';
 import Footer from '@/components/Footer';
 import AddUserForm from '@/components/AddUserForm';
 import sortUsers from '@/utils/sortUsers';
 import { FILTER_LIST, TOGGLE_ACTIVE } from '@/constants/buttonTitle';
-import { IRootState } from '@/modules/types';
 import * as S from './styles';
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const isMobile = useSelector((state: IRootState) => state.media.isMobile);
-  const isTablet = useSelector((state: IRootState) => state.media.isTablet);
-
-  const users = useSelector((state: IRootState) => state.users.users);
+  const dispatch: AppDispatch = useDispatch();
+  const users = useSelector((state: RootState) => state.users.users);
   const activeUsers = users.filter((user) => !user.isDeleted);
   const [currentFilter, setCurrentFilter] = useState(FILTER_LIST[0]);
   const sortedUsers = sortUsers(activeUsers, currentFilter);
@@ -34,7 +31,7 @@ const Home = () => {
   };
 
   const handleDeleteUsers = (ids: number[]) => {
-    updateUserData(ids, true, dispatch);
+    dispatch(updateUsersData({ ids: ids, updateValue: true }));
     setIsActive((prev) => !prev);
     setCheckedUserIds([]);
   };
@@ -71,7 +68,7 @@ const Home = () => {
   }, [showAddUserForm]);
 
   return (
-    <S.Wrapper $isMobile={isMobile} $isTablet={isTablet}>
+    <S.Wrapper>
       <S.Container>
         <S.Header>
           <FilterButton
@@ -83,7 +80,7 @@ const Home = () => {
             {isActive ? TOGGLE_ACTIVE.on : TOGGLE_ACTIVE.off}
           </S.Switch>
         </S.Header>
-        <S.Body $isMobile={isMobile} $isTablet={isTablet}>
+        <S.Body>
           <Thumbnail onAddClick={onShowAddUserForm} isActive={isActive} />
           {sortedUsers.map((user) => (
             <Thumbnail
@@ -103,7 +100,7 @@ const Home = () => {
       />
       {showAddUserForm && (
         <S.Dimmer onClick={handleOutsideClick}>
-          <S.ModalPopUp ref={formRef} $isMobile={isMobile}>
+          <S.ModalPopUp ref={formRef}>
             <AddUserForm onClose={offShowAddUserForm} />
           </S.ModalPopUp>
         </S.Dimmer>

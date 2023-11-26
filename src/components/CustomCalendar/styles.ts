@@ -2,13 +2,15 @@ import { styled } from 'styled-components';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-export const CalendarBox = styled.div<{
-  $isMobile: boolean;
-}>`
-  width: ${(props) => (props.$isMobile ? '290px' : '330px')};
+export const CalendarBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 330px;
+
+  ${(props) => props.theme.media.mobile} {
+    width: 290px;
+  }
 `;
 
 export const StyleCalendar = styled(Calendar)`

@@ -1,40 +1,40 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{
-  $isMobile: boolean;
-  $isTablet: boolean;
-  $hasRestoreClick: boolean;
-}>`
+export const Container = styled.div<{ $hasRestoreClick: boolean }>`
   background-color: white;
   height: 100%;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0px 5px 15px 0px #091f5b33;
-  width: ${(props) => {
-    if (props.$hasRestoreClick) {
-      if (props.$isMobile) return '350px';
-      if (props.$isTablet) return '688px';
-      return '450px';
-    } else {
-      if (props.$isMobile) return '327px';
-      if (props.$isTablet) return '350px';
-      return '450px';
-    }
-  }};
+  width: ${(props) => (props.$hasRestoreClick ? '450px' : '450px')};
+
+  ${(props) => props.theme.media.mobile} {
+    width: ${(props) => (props.$hasRestoreClick ? '350px' : '327px')};
+  }
+
+  ${(props) => props.theme.media.tablet} {
+    width: ${(props) => (props.$hasRestoreClick ? '688px' : '350px')};
+  }
 `;
 
-export const AddContainer = styled.div<{
-  $isMobile: boolean;
-  $isTablet: boolean;
-}>`
-  width: ${(props) =>
-    props.$isMobile ? '327px' : props.$isTablet ? '350px' : '450px'};
+export const AddContainer = styled.div`
   height: 430px;
   background-color: white;
   box-shadow: 0px 5px 15px 0px #091f5b33;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${(props) => props.theme.media.mobile} {
+    width: 327px;
+  }
+
+  ${(props) => props.theme.media.tablet} {
+    width: 350px;
+  }
+  ${(props) => props.theme.media.desktop} {
+    width: 450px;
+  }
 `;
 
 export const Header = styled.div`

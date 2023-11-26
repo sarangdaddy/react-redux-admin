@@ -1,4 +1,4 @@
-import { IUser } from '@/modules/types';
+import { IUser } from '@/modules/users';
 import { IFilter } from '@/constants/buttonTitle';
 
 const sortUsers = (users: IUser[], currentFilter: IFilter): IUser[] => {

@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
-import { addUserData } from '@/apis';
+import { AppDispatch, RootState } from '@/index';
+import { IUser, addUserData } from '@/modules/users';
 import CustomCalendar from '../CustomCalendar';
 import SubmitButton from '../SubmitButton';
 import { formatDateToLocalTimezone } from '@/utils/formatDateToLocalTimezone';
 import { SUBMIT_BUTTON } from '@/constants/buttonTitle';
 import { ADD_USER_FORM, PROFILE_LIST, SEX_LIST } from '@/constants/label';
-import { IUser, IRootState } from '@/modules/types';
 import * as S from './styles';
 
 interface IAddUserFormProps {
@@ -16,8 +16,8 @@ interface IAddUserFormProps {
 }
 
 const AddUserForm = ({ onClose }: IAddUserFormProps) => {
-  const dispatch = useDispatch();
-  const users = useSelector((state: IRootState) => state.users.users);
+  const dispatch: AppDispatch = useDispatch();
+  const users = useSelector((state: RootState) => state.users.users);
   const lastId = users[users.length - 1]?.id || 0;
   const { register, handleSubmit, formState, control, setValue, trigger } =
     useForm<IUser>();
@@ -33,7 +33,7 @@ const AddUserForm = ({ onClose }: IAddUserFormProps) => {
       isDeleted: false,
     };
 
-    addUserData(newUserData, dispatch);
+    dispatch(addUserData(newUserData));
     onClose();
   };
 

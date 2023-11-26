@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-import { IRootState } from '@/modules/types';
 import * as S from './styles';
 
 type ValuePiece = Date | null;
@@ -11,7 +9,6 @@ interface CustomCalendarProps {
 }
 
 const CustomCalendar = ({ onDateChange }: CustomCalendarProps) => {
-  const isMobile = useSelector((state: IRootState) => state.media.isMobile);
   const today = new Date();
 
   const handleDateChange = (value: Value) => {
@@ -19,7 +16,7 @@ const CustomCalendar = ({ onDateChange }: CustomCalendarProps) => {
   };
 
   return (
-    <S.CalendarBox $isMobile={isMobile}>
+    <S.CalendarBox>
       <S.StyleCalendar
         locale="en-US"
         onChange={handleDateChange}
