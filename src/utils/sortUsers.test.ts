@@ -1,5 +1,5 @@
 import sortUsers from './sortUsers';
-import { IUser } from '@/modules/users';
+import { IUser } from '@/modules/usersType';
 
 describe('sortUsers', () => {
   const userA: IUser = {

@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAddUserMutation, useGetUsersQuery } from '@/modules/services/users';
 import { useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
-import { AppDispatch, RootState } from '@/index';
-import { IUser, addUserData } from '@/modules/users';
+import { IUser } from '@/modules/usersType';
 import CustomCalendar from '../CustomCalendar';
 import SubmitButton from '../SubmitButton';
 import { formatDateToLocalTimezone } from '@/utils/formatDateToLocalTimezone';
@@ -16,15 +15,18 @@ interface IAddUserFormProps {
 }
 
 const AddUserForm = ({ onClose }: IAddUserFormProps) => {
-  const dispatch: AppDispatch = useDispatch();
-  const users = useSelector((state: RootState) => state.users.users);
-  const lastId = users[users.length - 1]?.id || 0;
+  const { data: users, isError } = useGetUsersQuery();
+  const [addUser] = useAddUserMutation();
+
+  if (isError) return <div>에러 발생</div>;
+
+  const lastId = users?.[users.length - 1]?.id || 0;
   const { register, handleSubmit, formState, control, setValue, trigger } =
     useForm<IUser>();
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
 
-  const onSubmit = (data: IUser) => {
+  const onSubmit = async (data: IUser) => {
     const newUserData: IUser = {
       id: lastId + 1,
       nickname: data.nickname,
@@ -33,7 +35,7 @@ const AddUserForm = ({ onClose }: IAddUserFormProps) => {
       isDeleted: false,
     };
 
-    dispatch(addUserData(newUserData));
+    await addUser(newUserData);
     onClose();
   };
 

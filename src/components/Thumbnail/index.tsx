@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { IUser } from '@/modules/users';
+import { IUser } from '@/modules/usersType';
 import PlusButton from '../PlusButton';
 import SubmitButton from '../SubmitButton';
 import { SUBMIT_BUTTON } from '@/constants/buttonTitle';

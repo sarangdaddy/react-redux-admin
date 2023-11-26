@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { MouseEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/index';
-import { updateUsersData } from '@/modules/users';
+import {
+  useGetUsersQuery,
+  useUpdateUsersMutation,
+} from '@/modules/services/users';
 import FilterButton from '@/components/FilterButton';
 import Thumbnail from '@/components/Thumbnail';
 import Footer from '@/components/Footer';
@@ -12,9 +13,12 @@ import { FILTER_LIST, TOGGLE_ACTIVE } from '@/constants/buttonTitle';
 import * as S from './styles';
 
 const Home = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const users = useSelector((state: RootState) => state.users.users);
-  const activeUsers = users.filter((user) => !user.isDeleted);
+  const { data: users, isLoading, isError } = useGetUsersQuery();
+  const [updateUser] = useUpdateUsersMutation();
+
+  if (isError) return <div>에러 발생</div>;
+
+  const activeUsers = users?.filter((user) => !user.isDeleted) ?? [];
   const [currentFilter, setCurrentFilter] = useState(FILTER_LIST[0]);
   const sortedUsers = sortUsers(activeUsers, currentFilter);
   const [checkedUserIds, setCheckedUserIds] = useState<number[]>([]);
@@ -30,8 +34,8 @@ const Home = () => {
     }
   };
 
-  const handleDeleteUsers = (ids: number[]) => {
-    dispatch(updateUsersData({ ids: ids, updateValue: true }));
+  const handleDeleteUsers = async (ids: number[]) => {
+    await updateUser({ ids: ids, updateValue: true });
     setIsActive((prev) => !prev);
     setCheckedUserIds([]);
   };
@@ -68,44 +72,50 @@ const Home = () => {
   }, [showAddUserForm]);
 
   return (
-    <S.Wrapper>
-      <S.Container>
-        <S.Header>
-          <FilterButton
-            currentFilter={currentFilter}
-            setCurrentFilter={setCurrentFilter}
+    <>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <S.Wrapper>
+          <S.Container>
+            <S.Header>
+              <FilterButton
+                currentFilter={currentFilter}
+                setCurrentFilter={setCurrentFilter}
+                isActive={isActive}
+              />
+              <S.Switch onClick={toggleActive} $isActive={isActive}>
+                {isActive ? TOGGLE_ACTIVE.on : TOGGLE_ACTIVE.off}
+              </S.Switch>
+            </S.Header>
+            <S.Body>
+              <Thumbnail onAddClick={onShowAddUserForm} isActive={isActive} />
+              {sortedUsers.map((user) => (
+                <Thumbnail
+                  key={user.id}
+                  user={user}
+                  isChecked={checkedUserIds.includes(user.id)}
+                  onCheckboxChange={onCheckboxChange}
+                  isActive={isActive}
+                />
+              ))}
+            </S.Body>
+          </S.Container>
+          <Footer
             isActive={isActive}
+            checkedUserIds={checkedUserIds}
+            onUsersDelete={handleDeleteUsers}
           />
-          <S.Switch onClick={toggleActive} $isActive={isActive}>
-            {isActive ? TOGGLE_ACTIVE.on : TOGGLE_ACTIVE.off}
-          </S.Switch>
-        </S.Header>
-        <S.Body>
-          <Thumbnail onAddClick={onShowAddUserForm} isActive={isActive} />
-          {sortedUsers.map((user) => (
-            <Thumbnail
-              key={user.id}
-              user={user}
-              isChecked={checkedUserIds.includes(user.id)}
-              onCheckboxChange={onCheckboxChange}
-              isActive={isActive}
-            />
-          ))}
-        </S.Body>
-      </S.Container>
-      <Footer
-        isActive={isActive}
-        checkedUserIds={checkedUserIds}
-        onUsersDelete={handleDeleteUsers}
-      />
-      {showAddUserForm && (
-        <S.Dimmer onClick={handleOutsideClick}>
-          <S.ModalPopUp ref={formRef}>
-            <AddUserForm onClose={offShowAddUserForm} />
-          </S.ModalPopUp>
-        </S.Dimmer>
+          {showAddUserForm && (
+            <S.Dimmer onClick={handleOutsideClick}>
+              <S.ModalPopUp ref={formRef}>
+                <AddUserForm onClose={offShowAddUserForm} />
+              </S.ModalPopUp>
+            </S.Dimmer>
+          )}
+        </S.Wrapper>
       )}
-    </S.Wrapper>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import { PROFILE_LIST, SEX_LIST } from '@/constants/label';
-import { IUser } from '@/modules/users';
+import { IUser } from '@/modules/usersType';
 import * as S from './styles';
 
 interface UserListProps {
