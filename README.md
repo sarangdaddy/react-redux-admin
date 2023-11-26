@@ -1,8 +1,4 @@
-![](/src/assets/Naraspace.svg)
-
-# 🛰️ Nara Space 입사지원 과제 프로젝트
-
-- FE 신입사원 지원자 김성언
+# React와 Redux로 Admin 페이지 구현 프로젝트
 
 </br>
 
@@ -23,13 +19,13 @@
 ### 1-1. 저장소 복제
 
 ```bash
-git clone https://github.com/sarangdaddy/naraspace-kimsungun.git
+git clone https://github.com/sarangdaddy/react-redux-admin.git
 ```
 
 ### 1-2. 의존성 설치
 
 ```bash
-cd naraspace-kimsungun
+cd react-redux-admin
 npm install
 ```
 
@@ -81,7 +77,7 @@ npm test
 ## 3. 프로젝트 구조
 
 ```
-📦 NARASPACE
+📦 REACT-REDUX-ADMIN
 ├─ json-server
 │  └─ db.json       // 데이터베이스 파일로 user_date 정보 보관
 ├─ node_modules
@@ -558,6 +554,3 @@ export const updateUserData = async (
 
 </br>
 
-## 7. 보완점
-
-- [개인적인 학습을 위한 추가 작업 - 반응형 재설계](https://github.com/sarangdaddy/naraspace-kimsungun/tree/refactor-branch)

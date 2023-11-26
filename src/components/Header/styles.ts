@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import Naraspace from '../../assets/Naraspace.svg';
+import HomeLogo from '../../assets/HomeLogo.svg';
 import styled from 'styled-components';
 
 export const Container = styled.div<{ $isMobile: boolean }>`
@@ -17,7 +17,7 @@ export const Logo = styled.div`
   padding: 10px 20px;
 `;
 
-export const StyledImg = styled(Naraspace)`
+export const StyledImg = styled(HomeLogo)`
   color: ${(props) => props.theme.colors.darkBlue};
 `;
 
