@@ -8,25 +8,28 @@ const middlewares = jsonServer.defaults();
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
-server.patch('/user_data', (req, res, next) => {
-  if (req.query.ids && typeof req.body.isDeleted !== 'undefined') {
-    const ids = req.query.ids.split(',').map((id) => parseInt(id, 10));
+server.patch('/user_data', (req, res) => {
+  const { ids, isDeleted } = req.body;
+  if (Array.isArray(ids) && typeof isDeleted !== 'undefined') {
     const db = router.db;
+    let updatedUsers = [];
 
     ids.forEach((id) => {
       const user = db.get('user_data').find({ id }).value();
-
       if (user) {
-        db.get('user_data')
-          .find({ id })
-          .assign({ isDeleted: req.body.isDeleted })
-          .write();
+        db.get('user_data').find({ id }).assign({ isDeleted }).write();
+
+        updatedUsers.push(db.get('user_data').find({ id }).value());
       }
     });
 
-    res.status(200).jsonp(db.get('user_data').value());
+    if (updatedUsers.length > 0) {
+      res.status(200).jsonp(updatedUsers);
+    } else {
+      res.sendStatus(404);
+    }
   } else {
-    next();
+    res.sendStatus(400);
   }
 });
 
