@@ -1,4 +1,9 @@
-# React와 Redux로 Admin 웹 애플리케이션 구현 프로젝트
+# React와 Redux를 활용한 관리자 웹 애플리케이션 구현 프로젝트
+
+- 이 프로젝트는 React와 Redux를 학습하고 실제로 적용해보기 위한 개인 프로젝트입니다.
+- 프로젝트 구축에는 CRA를 사용하는 대신, 맞춤형 구성을 위해 webpack을 기반으로 설정했습니다.
+- Redux의 기본 원리부터 Redux Toolkit, 그리고 비동기 작업 처리와 같은 기능을 학습하고 적용했습니다.
+- 서버에서 제공하는 데이터를 기반으로 UI가 변경되며, 사용자의 요청에 반응하여 서버 데이터를 업데이트하고 UI를 동적으로 변경합니다.
 
 </br>
 
@@ -73,6 +78,8 @@ npm test
 
 # 프로젝트 설명
 
+[목차로 돌아가기](#📌-목차)
+
 ## 3. 프로젝트 구조
 
 ```
@@ -101,8 +108,20 @@ npm test
 
 ## 4. 라이브러리
 
-- reduxjs/toolkit : 상태관리 라이브러리 Redux 툴킷
-- react-calendar : 달력 라이브러리
+[목차로 돌아가기](#📌-목차)
+
+### 4-1. 주요 기술 스택 및 도구
+
+- 개발 언어 : React, TypeScript
+- 번들러 : webpack
+- 상태 관리 : Redux
+- 스타일링 : styled-components
+- Mock Server : JSON-Server
+
+### 4-2. 추가적으로 사용된 라이브러리
+
+- reduxjs/toolkit (Redux Toolkit) : 상태관리 라이브러리 Redux 도구 모음
+- react-calendar : 사용자가 날짜를 선택하는 인터페이스를 위해 사용했습니다.
 - React Hook Form : Form의 요구사항 및 에러처리 코드를 효율적으로 작성하기 위해 사용했습니다.
 - React Router Dom : React에서 제공하는 Router 기능을 사용했습니다.
 - Jest : 테스트 진행을 위해 사용했습니다.
@@ -111,9 +130,11 @@ npm test
 
 ## 5. 프로젝트 상태관리
 
+[목차로 돌아가기](#📌-목차)
+
 - 프로젝트의 상태 관리는 Redux를 활용하여 구현되었습니다.
-- 처음에는 Action, Reducer, Dispatch를 설정하는 기본 방식으로 구현했습니다.
-- 이후 Redux의 미들웨어 개념을 도입하여 상태 관리 로직을 확장했습니다.
+- 처음에는 Action, Reducer, Dispatch를 활용하는 기본적인 Redux 방식으로 상태 관리를 구현했습니다.
+- 이후 Redux의 미들웨어를 도입하여 상태 관리 로직을 확장했습니다.
 - 최종적으로 Redux Toolkit Query(RTK Query)를 사용하여 서버 상태 관리를 구현했습니다.
 
 ### 5-1. Redux의 기본방식을 적용한 상태관리
@@ -133,7 +154,7 @@ const store = configureStore({
 ```tsx
 // modules/index.ts
 const rootReducer = combineReducers({
-  users,
+  usersReducer,
 });
 
 export default rootReducer;
@@ -210,8 +231,8 @@ const onSubmit = (data: IUser) => {
 #### 5-2-1. 기존 Redux 로직
 
 - 전역 상태관리로 Redux 라이브러리를 사용하고 있습니다.
-- 하지만 사용중인 Redux의 로직은 Context API와 useReducer 훅을 사용한 방식과의 큰 차이점이 없습니다.
-- Redux는 Context API에는 존재하지 않는 미들웨어(Middleware)가 존재합니다.
+- 하지만 사용중인 Redux의 로직은 `Context API`와 `useReducer` 훅을 사용한 방식과의 큰 차이점이 없습니다.
+- Redux는 Context API에는 존재하지 않는 `미들웨어(Middleware)`가 존재합니다.
 
 #### 5-2-2. 미들웨어란?
 
@@ -275,19 +296,15 @@ export type AppDispatch = typeof store.dispatch;
 ```ts
 middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(myLogger, anotherMiddleware),
-
 ```
 
-#### 5-2-5. 미들웨어 라이브러리 redux-thunk, redux-saga
+#### 5-2-5. 미들웨어 라이브러리 redux-thunk 프로젝트에 적용하기
 
 - redux 비동기 작업으로는 `redux-thunk`, `redux-saga`가 많이 사용됩니다.
-
-#### 5-2-6. redux-thunk 사용하여 프로젝트에 적용하기
-
-- redux-thunk는 리덕스에서 비동기 작업을 처리 할 때 가장 많이 사용되는 미들웨어입니다.
+- `redux-thunk`는 리덕스에서 비동기 작업을 처리 할 때 가장 많이 사용되는 미들웨어입니다.
 - 이 미들웨어를 사용하면 **액션객체가 아닌 함수를 디스패치** 할 수 있습니다.
 
-> thunk(미들웨어)를 사용하여 apis 파일에서 비동기 처리하던 로직을 redux내에서 처리되도록 수정해보았습니다.
+> thunk(미들웨어)를 사용하여 apis 파일에서 비동기 처리하던 로직을 redux내에서 처리되도록 수정했습니다.
 
 ```ts
 // modules/users.ts
@@ -385,7 +402,7 @@ const usersSlice = createSlice({
 });
 ```
 
-#### 5-2-7. 미들웨어 사용후 느낀점
+#### 5-2-6. 미들웨어 사용후 느낀점
 
 - Redux의 기본적인 액션은 동기적인 페이로드를 전달하는 객체입니다.
 - 즉, 리듀서에 전달되었을 때 최종 값을 가지고 있어야합니다.
@@ -417,16 +434,16 @@ const usersSlice = createSlice({
 
 #### 5-3-2. RTK Query만의 특징
 
-RTJ Query는 React Query, SWR과 같은 데이터 패칭 기술과 비슷하지만 특별한 접근 방식을 API 디자인에 통합했습니다.
+RTK Query는 React Query, SWR과 같은 데이터 패칭 기술과 비슷하지만 특별한 접근 방식을 API 디자인에 통합했습니다.
 
 - Redux 통함  
-  : RTK Query는 Redux 상태 관리 시스템과 통합되어 있습니다.
+  : RTK Query는 Redux 상태 관리 시스템과 통합되어 있습니다.  
   이는 Redux를 기반으로 하는 애플리케이션에서 **전체 애플리케이션 상태를 하나의 저장소에서 관리**할 수 있도록 해줍니다.
 - Redux DevTools 통합  
   : Redux DevTools와의 통합을 통해 상태 변화를 추적하고 디버깅에 용이하게 해줍니다.
 
-> Redux를 사용하는 프로젝트라면 RTK Query를 함께 사용하여 일관된 상태 관리를 가능토록 할 수 있습니다.
-> Redux에 의존하지 않는 프로젝트에는 상대적으로 가변운 React Query, SWR의 사용이 적합할 수 있습니다.
+> Redux를 사용하는 프로젝트라면 RTK Query를 함께 사용하여 일관된 상태 관리를 가능토록 할 수 있습니다.  
+> Redux에 의존하지 않는 프로젝트에는 상대적으로 가벼운 React Query, SWR의 사용이 적합할 수 있습니다.
 
 #### 5-3-3. RTK Query 사용하기
 
@@ -467,7 +484,7 @@ export const { useGetUsersQuery, useAddUserMutation, useUpdateUsersMutation } =
   userApi;
 ```
 
-#### 5-3-4. 변경된 서버 데이터 반영하기
+#### 5-3-4. RTK Query를 통해 관리되는 서버 상태 사용하기
 
 - RTK Query를 사용하면 컴포넌트내에서 데이터 조회, 업데이트가 가능합니다.
 - 상태는 전역적으로 관리되기에 필요한 컴포넌트 내에서 사용하기 용이합니다.
@@ -510,13 +527,16 @@ const onSubmit = async (data: IUser) => {
 
 ## 6. 주요 기능 설명
 
+[목차로 돌아가기](#📌-목차)
+
 ### 6-1. Home 유저 리스트 필터
 
 - 전체 유저 리스트에서 삭제되지 않은 유저를 가져옵니다.
 
 ```tsx
-const users = useSelector((state: IRootState) => state.users.users);
-const activeUsers = users.filter((user) => !user.isDeleted);
+// Home.tsx
+const { data: users, isLoading, isError } = useGetUsersQuery();
+const activeUsers = users?.filter((user) => !user.isDeleted) ?? [];
 ```
 
 - Home컴포넌트에서 현재필터 상태를 관리합니다.
@@ -571,8 +591,8 @@ const [checkedUserIds, setCheckedUserIds] = useState<number[]>([]);
 
 ```tsx
 // 이벤트 핸들링 함수
-const handleDeleteUsers = (ids: number[]) => {
-  updateUserData(ids, true, dispatch); // 유저 정보 업데이트 요청
+const handleDeleteUsers = async (ids: number[]) => {
+  await updateUser({ ids: ids, updateValue: true }); // 유저 정보 업데이트
   setIsActive((prev) => !prev);
   setCheckedUserIds([]);
 };
@@ -583,28 +603,6 @@ const handleDeleteUsers = (ids: number[]) => {
   checkedUserIds={checkedUserIds}
   onUsersDelete={handleDeleteUsers}
 />;
-
-// apis
-export const updateUserData = async (
-  ids: number[],
-  updateValue: boolean,
-  dispatch: AppDispatch,
-) => {
-  try {
-    const userToUpdate = { isDeleted: updateValue };
-    const queryString = ids.join(',');
-    const res = await axiosInstance.patch(
-      `/user_data?ids=${queryString}`,
-      userToUpdate,
-    );
-
-    if (res.status === 200) {
-      dispatch(updateUsers(ids));
-    }
-  } catch (err) {
-    return err;
-  }
-};
 ```
 
 ### 6-3. 새로운 유저 등록하기
@@ -635,11 +633,11 @@ const onShowAddUserForm = () => {
 }
 ```
 
-- `AddUserForm` 컴포넌트 내에서는 Redux를 사용하여 현재의 users 데이터를 가져와서 새로운 유저의 ID 값을 계산합니다.
+- `AddUserForm` 컴포넌트에서 users 상태를 가져와서 새로운 유저의 ID 값을 계산합니다.
 
 ```tsx
 // AddUserForm 컴포넌트
-const users = useSelector((state: IRootState) => state.users.users);
+const { data: users, isError } = useGetUsersQuery();
 const lastId = users[users.length - 1]?.id || 0;
 ```
 
@@ -651,7 +649,7 @@ const lastId = users[users.length - 1]?.id || 0;
 const { register, handleSubmit, formState, control, setValue, trigger } =
   useForm<IUser>();
 
-const onSubmit = (data: IUser) => {
+const onSubmit = async (data: IUser) => {
   const newUserData: IUser = {
     id: lastId + 1,
     nickname: data.nickname,
@@ -660,21 +658,8 @@ const onSubmit = (data: IUser) => {
     isDeleted: false,
   };
 
-  addUserData(newUserData, dispatch);
+  await addUser(newUserData);
   onClose();
-};
-
-// apis
-export const addUserData = async (data: IUser, dispatch: AppDispatch) => {
-  try {
-    const res = await axiosInstance.post(`/user_data`, data);
-
-    if (res.status === 200) {
-      dispatch(addUser(res.data));
-    }
-  } catch (err) {
-    return err;
-  }
 };
 ```
 
@@ -684,7 +669,7 @@ export const addUserData = async (data: IUser, dispatch: AppDispatch) => {
 
 ```tsx
 // DeletedUsers 컴포넌트
-const users = useSelector((state: IRootState) => state.users.users);
+const { data: users, isLoading, isError } = useGetUsersQuery();
 const deletedUsers = users.filter((user) => user.isDeleted);
 
 // JSX
@@ -722,33 +707,49 @@ const selectUser = (id: number) => {
 />;
 ```
 
-- 활성화된 `복구하기` 버튼을 클릭하면, 해당 유저의 데이터를 서버에 복구 요청하는 API를 호출합니다.
+- 활성화된 `복구하기` 버튼을 클릭하면, 해당 유저의 데이터를 활성화로 변경하는 요청을 보냅니다.
 
 ```tsx
 // DeletedUsers 컴포넌트
-const restoreUser = (ids: number[]) => {
-  updateUserData(ids, false, dispatch); // 유저 정보 업데이트 요청
+const restoreUser = async (ids: number[]) => {
+  await updateUser({ ids: ids, updateValue: false });
 };
+```
 
-// apis
-export const updateUserData = async (
-  ids: number[],
-  updateValue: boolean,
-  dispatch: AppDispatch,
-) => {
-  try {
-    const userToUpdate = { isDeleted: updateValue };
-    const queryString = ids.join(',');
-    const res = await axiosInstance.patch(
-      `/user_data?ids=${queryString}`,
-      userToUpdate,
-    );
+### 6-5. 반응형 웹 애플리케이션
 
-    if (res.status === 200) {
-      dispatch(updateUsers(ids));
-    }
-  } catch (err) {
-    return err;
+- styled-components의 `theme`를 사용하여 `mobile`, `tablet`, `desktop`에 해당하는 크기를 지정합니다.
+- 이는 미디어 쿼리를 중항화하여 관리할 수 있습니다.
+
+```ts
+// styles/theme
+import { DefaultTheme } from 'styled-components';
+
+export const theme: DefaultTheme = {
+  media: {
+    mobile: '@media (max-width: 767px)',
+    tablet: '@media (min-width: 768px) and (max-width: 1023px)',
+    desktop: '@media (min-width: 1024px)',
+  },
+};
+```
+
+- 현재 디바이스에 따라 반응형으로 적용되는 스타일을 컴포넌트에 적용합니다.
+
+```ts
+// styles-component
+export const Container = styled.div`
+  width: 935px;
+  height: 630px;
+
+  ${(props) => props.theme.media.mobile} {
+    width: 350px;
+    height: 500px;
   }
-};
+
+  ${(props) => props.theme.media.tablet} {
+    width: 688px;
+    height: 500px;
+  }
+`;
 ```
