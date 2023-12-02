@@ -1,13 +1,14 @@
 # React와 Redux를 활용한 관리자 웹 애플리케이션 구현 프로젝트
 
-- 이 프로젝트는 React와 Redux를 학습하고 실제로 적용해보기 위한 개인 프로젝트입니다.
-- 프로젝트 구축에는 CRA를 사용하는 대신, 맞춤형 구성을 위해 webpack을 기반으로 설정했습니다.
-- Redux의 기본 원리부터 Redux Toolkit, 그리고 비동기 작업 처리와 같은 기능을 학습하고 적용했습니다.
-- 서버에서 제공하는 데이터를 기반으로 UI가 변경되며, 사용자의 요청에 반응하여 서버 데이터를 업데이트하고 UI를 동적으로 변경합니다.
+- 이 프로젝트는 `React`와 `Redux`를 학습하고 실제로 적용해보기 위한 개인 프로젝트입니다.
+- 프로젝트 구축에는 `CRA`를 사용하는 대신, 맞춤형 구성을 위해 `webpack`을 기반으로 설정했습니다.
+- Redux의 기본 원리부터 `Redux Toolkit`, 그리고 비동기 작업 처리와 같은 기능을 학습하고 적용했습니다.
+- 서버에서 제공하는 데이터를 기반으로 UI가 변경됩니다.
+- 사용자의 요청에 반응하여 서버 데이터를 업데이트하고 UI를 동적으로 변경합니다.
 
 </br>
 
-## 📌 목차
+## 목차
 
 - [1. 시작하기](#1-프로젝트-실행-방법)
 - [2. 커밋 규칙](#2-commit-prefix-소개)
@@ -78,7 +79,7 @@ npm test
 
 # 프로젝트 설명
 
-[목차로 돌아가기](#📌-목차)
+[목차로 돌아가기](#목차)
 
 ## 3. 프로젝트 구조
 
@@ -108,7 +109,7 @@ npm test
 
 ## 4. 라이브러리
 
-[목차로 돌아가기](#📌-목차)
+[목차로 돌아가기](#목차)
 
 ### 4-1. 주요 기술 스택 및 도구
 
@@ -130,12 +131,12 @@ npm test
 
 ## 5. 프로젝트 상태관리
 
-[목차로 돌아가기](#📌-목차)
+[목차로 돌아가기](#목차)
 
 - 프로젝트의 상태 관리는 Redux를 활용하여 구현되었습니다.
-- 처음에는 Action, Reducer, Dispatch를 활용하는 기본적인 Redux 방식으로 상태 관리를 구현했습니다.
+- 처음에는 `Action`, `Reducer`, `Dispatch를` 활용하는 기본적인 Redux 방식으로 상태 관리를 구현했습니다.
 - 이후 Redux의 미들웨어를 도입하여 상태 관리 로직을 확장했습니다.
-- 최종적으로 Redux Toolkit Query(RTK Query)를 사용하여 서버 상태 관리를 구현했습니다.
+- 최종적으로 `Redux Toolkit Query(RTK Query)`를 사용하여 서버 상태 관리를 구현했습니다.
 
 ### 5-1. Redux의 기본방식을 적용한 상태관리
 
@@ -407,11 +408,11 @@ const usersSlice = createSlice({
 - Redux의 기본적인 액션은 동기적인 페이로드를 전달하는 객체입니다.
 - 즉, 리듀서에 전달되었을 때 최종 값을 가지고 있어야합니다.
 - 하지만, 데이터 요청과 같은 비동기 작업은 응답을 기다려야 합니다.
-- 이를 위해 사용되는 것이 middleware 입니다.
-- middleware 덕분에 액션은 Promise 결과를 기다리고 리듀서에 전달 될 수 있습니다.
-- Promise의 pending, fulfilled, rejected의 상태에 따른 활용도 가능합니다.
-- 기존의 비동기 함수 내부에서 dispatch를 호출하는 방법도 동일한 동작을 지원했으나
-- 애플리케이션의 상태를 예측 가능하게 만들자는 Redux 철학에는 middleware를 이용하여 비즈니스 로직을 중앙집중화하는게 적합합니다.
+- 이를 위해 사용되는 것이 `middleware` 입니다.
+- `middleware` 덕분에 액션은 `Promise` 결과를 기다리고 리듀서에 전달 될 수 있습니다.
+- `Promise`의 `pending`, `fulfilled`, `rejected`의 상태에 따른 활용도 가능합니다.
+- 기존의 비동기 함수 내부에서 `dispatch`를 호출하는 방법도 동일한 동작을 지원했으나
+- 애플리케이션의 상태를 예측 가능하게 만들자는 Redux 철학에는 `middleware`를 이용하여 비즈니스 로직을 중앙집중화하는게 적합합니다.
 
 </br>
 
@@ -419,7 +420,7 @@ const usersSlice = createSlice({
 
 - Redux의 미들웨어를 적용하여 비동기 처리를 통해 중앙에서 관리할 수 있었습니다.
 - 다만, 현재 프로젝트에서 관리하던 상태는 서버 상태로서 관리되는 것이 효율성과 단순화에 좋다고 판단되었습니다.
-- RTK Query는 미들웨어, 액션, 리듀서 작성을 간소화하고 서버 데이터 캐싱, 업데이트, 리패칭을 효율적으로 관리합니다.
+- `RTK Query`는 미들웨어, 액션, 리듀서 작성을 간소화하고 서버 데이터 `캐싱`, `업데이트`, `리패칭`을 효율적으로 관리합니다.
 
 #### 5-3-1. RTK Query 주요 특징
 
@@ -434,7 +435,7 @@ const usersSlice = createSlice({
 
 #### 5-3-2. RTK Query만의 특징
 
-RTK Query는 React Query, SWR과 같은 데이터 패칭 기술과 비슷하지만 특별한 접근 방식을 API 디자인에 통합했습니다.
+RTK Query는 `React Query`, `SWR`과 같은 데이터 패칭 기술과 비슷하지만 특별한 접근 방식을 API 디자인에 통합했습니다.
 
 - Redux 통함  
   : RTK Query는 Redux 상태 관리 시스템과 통합되어 있습니다.  
@@ -527,7 +528,7 @@ const onSubmit = async (data: IUser) => {
 
 ## 6. 주요 기능 설명
 
-[목차로 돌아가기](#📌-목차)
+[목차로 돌아가기](#목차)
 
 ### 6-1. Home 유저 리스트 필터
 
@@ -539,7 +540,7 @@ const { data: users, isLoading, isError } = useGetUsersQuery();
 const activeUsers = users?.filter((user) => !user.isDeleted) ?? [];
 ```
 
-- Home컴포넌트에서 현재필터 상태를 관리합니다.
+- `Home` 컴포넌트에서 현재필터 상태를 관리합니다.
 - 삭제되지 않은 유저 데이터와 현재필터를 헬퍼 함수에 전달하여 필터에 맞게 정렬된 유저 목록을 생성합니다.
 
 ```tsx
@@ -559,7 +560,7 @@ const sortedUsers = sortUsers(activeUsers, currentFilter);
     />
 ```
 
-- FilterButton 컴포넌트를 통해 사용자가 현재 필터 상태를 변경할 수 있는 기능을 제공합니다.
+- `FilterButton` 컴포넌트를 통해 사용자가 현재 필터 상태를 변경할 수 있는 기능을 제공합니다.
 
 ```tsx
 <FilterButton
@@ -607,13 +608,13 @@ const handleDeleteUsers = async (ids: number[]) => {
 
 ### 6-3. 새로운 유저 등록하기
 
-- Home 화면의 첫 썸네일에서는 사용자에게 유저 등록 기능을 제공합니다.
+- `Home` 화면의 첫 썸네일에서는 사용자에게 유저 등록 기능을 제공합니다.
 
 ```tsx
 <Thumbnail onAddClick={onShowAddUserForm} isActive={isActive} />
 ```
 
-- 이 썸네일의 버튼을 클릭하면 배경 딤처리와 함께 AddUserForm 컴포넌트가 모달 형태로 나타납니다.
+- 이 썸네일의 버튼을 클릭하면 배경 딤처리와 함께 `AddUserForm` 컴포넌트가 모달 형태로 나타납니다.
 
 ```tsx
 // 이벤트 핸들링 함수
@@ -633,7 +634,7 @@ const onShowAddUserForm = () => {
 }
 ```
 
-- `AddUserForm` 컴포넌트에서 users 상태를 가져와서 새로운 유저의 ID 값을 계산합니다.
+- `AddUserForm` 컴포넌트에서 `users` 상태를 가져와서 새로운 유저의 ID 값을 계산합니다.
 
 ```tsx
 // AddUserForm 컴포넌트
@@ -718,7 +719,7 @@ const restoreUser = async (ids: number[]) => {
 
 ### 6-5. 반응형 웹 애플리케이션
 
-- styled-components의 `theme`를 사용하여 `mobile`, `tablet`, `desktop`에 해당하는 크기를 지정합니다.
+- `styled-components`의 `theme`를 사용하여 `mobile`, `tablet`, `desktop`에 해당하는 크기를 지정합니다.
 - 이는 미디어 쿼리를 중항화하여 관리할 수 있습니다.
 
 ```ts
@@ -753,3 +754,5 @@ export const Container = styled.div`
   }
 `;
 ```
+
+[목차로 돌아가기](#목차)
